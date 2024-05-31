@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText email, password;
     TextInputLayout emailLayout, passwordLayout;
     MaterialButton loginButton;
+    MaterialButton forgetPassButton;
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -59,13 +60,17 @@ protected void onCreate(Bundle savedInstanceState) {
         public void onClick(View view) {
             SignUp signUp = new SignUp(LoginActivity.this);
             signUp.show();
-//            System.out.println("Sign Up Clicked");
-//            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(LoginActivity.this);
-//            View v = LayoutInflater.from(LoginActivity.this).inflate(R.layout.login_bottom_dialog, null);
-//            bottomSheetDialog.setContentView(v);
-//            bottomSheetDialog.show();
         }
     });
+    forgetPassButton= (MaterialButton) findViewById(R.id.forgotPasswordButton);
+    forgetPassButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ForgetPass forgetPass = new ForgetPass(LoginActivity.this);
+            forgetPass.show();
+        }
+    });
+
 }
 
 }

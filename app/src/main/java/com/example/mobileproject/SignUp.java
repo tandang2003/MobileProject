@@ -16,6 +16,6 @@ public class SignUp extends BottomSheetDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("Sign Up Clicked");
-        setContentView(R.layout.login_bottom_dialog);
+        setContentView(R.layout.sign_in_bottom_dialog);
     }
 }
