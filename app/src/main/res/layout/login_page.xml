@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:maxLines="1"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:id="@+id/passwordLoginInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
