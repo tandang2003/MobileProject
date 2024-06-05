@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_uploading"
+        android:title="Tiến trình"
+        android:icon="@drawable/baseline_autorenew_24"
+        />
+    <item
+        android:id="@+id/action_like"
+        android:title="Yêu thích"
+        android:icon="@drawable/heart_check_24px"
+        />
+
+    <item
+        android:id="@+id/action_dowload"
+        android:title="Đã tải xuống"
+        android:icon="@drawable/baseline_arrow_circle_down_24"
+        />
+
+</menu>
