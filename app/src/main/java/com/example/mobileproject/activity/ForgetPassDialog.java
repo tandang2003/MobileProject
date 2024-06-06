@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 
 import com.example.mobileproject.R;
 
-public class ForgetPass extends Dialog {
-    public ForgetPass(@NonNull Context context) {
+public class ForgetPassDialog extends Dialog {
+    public ForgetPassDialog(@NonNull Context context) {
         super(context);
     }
 

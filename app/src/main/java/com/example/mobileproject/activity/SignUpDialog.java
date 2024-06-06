@@ -56,7 +56,9 @@ public class SignUp extends BottomSheetDialog {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
         String confirmPassword = this.confirmPassword.getText().toString();
-        //TODO: Validation data
+        if(!checkingValidation(email, password, confirmPassword)){
+            return;
+        }
         ApiService.apiService.create(ApiAuthentication.class)
                 .register(
                         UserCreationRequest.builder()
@@ -103,5 +105,24 @@ public class SignUp extends BottomSheetDialog {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
         dismiss();
+    }
+
+    public boolean checkingValidation(String email, String password, String confirmPassword) {
+        if (email.isEmpty() || password.isEmpty()
+                || confirmPassword.isEmpty() ||
+                !password.equals(confirmPassword) || !email.contains("@")) {
+            Error error = null;
+            if (email.isEmpty() || !email.contains("@")) {
+                error = new Error(context, Exception.INVALID_EMAIL.getMessage());
+            } else if (password.isEmpty()) {
+                error = new Error(context, Exception.INVALID_PASSWORD.getMessage());
+            } else if (confirmPassword.isEmpty() || !password.equals(confirmPassword)) {
+                error = new Error(context, Exception.INVALID_CONFIRM_PASSWORD.getMessage());
+            }
+            error.show();
+            return false;
+        }
+        return true;
+
     }
 }
