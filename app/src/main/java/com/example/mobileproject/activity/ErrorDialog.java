@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 
 import com.example.mobileproject.R;
 
-public class Error extends Dialog {
+public class ErrorDialog extends Dialog {
     private String notify;
-    public Error(@NonNull Context context, String notify) {
+    public ErrorDialog(@NonNull Context context, String notify) {
         super(context);
         this.notify= notify;
     }
