@@ -10,6 +10,11 @@
     <color name="dark_brown">#372F2C</color>
     <color name="bg">#303030</color>
     <color name="mtrl_textinput_default_box_stroke_color">#888888</color>
+    <color name="colorIcon">#D7C3BA</color>
+    <color name="colorPrimary">#7b4bff</color>
+    <color name="colorPrimaryDark">#6539ba</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bgBottomNavigation">#33261E</color>
     <color name="primary_color">#7b4b32</color>
     <color name="secondary_color">#9c6b43</color>
     <color name="tertiary_color">#5a4945</color>
