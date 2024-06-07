@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    tools:context=".MainActivity">
+    tools:context=".activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,10 +45,14 @@
                 app:hintTextColor="@color/organe"
                 android:textColorHint="@color/gray"
                 android:hint="Email"
+                app:errorEnabled="true"
                 app:boxStrokeColor="@color/organe"
+                android:id="@+id/emailLoginInputLayout"
                 >
-
                 <com.google.android.material.textfield.TextInputEditText
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:id="@+id/emailLoginInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -64,9 +68,14 @@
                 android:outlineAmbientShadowColor="@color/gray"
                 app:hintTextColor="@color/organe"
                 app:boxStrokeColor="@color/organe"
+                app:errorEnabled="true"
+                android:id="@+id/passwordLoginInputLayout"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:id="@+id/passwordLoginInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -82,6 +91,7 @@
             android:layout_marginBottom="20sp"  >
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.OutlinedButton"
+                android:id="@+id/forgotPasswordButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/organe"
@@ -95,6 +105,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.OutlinedButton"
+                android:id="@+id/loginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -114,6 +125,7 @@
             android:layout_marginBottom="20sp"  >
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.OutlinedButton"
+                android:id="@+id/googleSignInButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="30dp"
@@ -131,14 +143,20 @@
                 />
         </GridLayout>
         <TextView
+            android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:enabled="true"
+            android:clickable="true"
             android:text="Sign up"
             android:textColor="@color/organe"
             android:textSize="14sp"
             android:layout_gravity="center"
             />
+
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
