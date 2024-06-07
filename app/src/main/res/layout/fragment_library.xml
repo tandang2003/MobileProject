@@ -16,11 +16,12 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bgBottomNavigation"
+            android:background="#7b4b32"
             app:titleTextColor="@color/colorIcon"
             app:title="@string/title_Library"
             app:menu="@menu/menu_toolbar"
-            app:itemIconTint="@color/colorIcon"
+            app:itemIconTint="@color/white"
+            app:subtitleTextColor="@color/white"
 
             />
     </FrameLayout>

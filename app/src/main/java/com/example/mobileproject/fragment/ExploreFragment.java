@@ -1,4 +1,4 @@
-package com.example.mobileproject.activity;
+package com.example.mobileproject.fragment;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileproject.R;
+import com.example.mobileproject.activity.BookAdapter;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
@@ -40,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExploreActivity extends Fragment {
+public class ExploreFragment extends Fragment {
 
     private BookAdapter adapter;
     private LinearLayout categoryLayout;
@@ -49,7 +50,7 @@ public class ExploreActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.explore_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore_page, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         booksListSection = view.findViewById(R.id.books_list_section);

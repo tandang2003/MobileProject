@@ -51,7 +51,7 @@
             android:name=".activity.LibraryActivity"
             android:exported="true" />
        <activity
-            android:name=".activity.ExploreActivity"
+            android:name=".fragment.ExploreFragment"
             android:exported="true" />
     </application>
 

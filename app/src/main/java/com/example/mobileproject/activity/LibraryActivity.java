@@ -1,5 +1,5 @@
     package com.example.mobileproject.activity;
-    
+
     import android.os.Bundle;
     import android.view.GestureDetector;
     import android.view.MenuItem;
@@ -15,11 +15,11 @@
     import androidx.fragment.app.FragmentTransaction;
 
     import com.example.mobileproject.R;
+    import com.example.mobileproject.fragment.ExploreFragment;
     import com.example.mobileproject.fragment.LibraryFragment;
     import com.example.mobileproject.fragment.SettingFragment;
-    import com.example.mobileproject.fragment.StoreFragment;
     import com.google.android.material.bottomnavigation.BottomNavigationView;
-    
+
     public class LibraryActivity extends AppCompatActivity {
     
     //    @Override
@@ -61,9 +61,8 @@
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     int itemId = item.getItemId();
-    
                     if (itemId == R.id.navigation_store){
-                        loadFragment(new StoreFragment(), false);
+                        loadFragment(new ExploreFragment(), false);
                         number_Menu = 0;
                     } else if (itemId == R.id.navigation_library){
                         loadFragment(new LibraryFragment(), false);
@@ -76,7 +75,7 @@
                     return true;
                 }
             });
-            loadFragment(new StoreFragment(), true);
+            loadFragment(new ExploreFragment(), true);
         }
         private void loadFragment(Fragment fragment, boolean isAppInitialized){
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -85,7 +84,6 @@
                 fragmentTransaction.add(R.id.frameLayout, fragment);
             } else {
                 fragmentTransaction.replace(R.id.frameLayout, fragment);
-    
             }
             fragmentTransaction.replace(R.id.frameLayout, fragment);
             fragmentTransaction.commit();
@@ -95,9 +93,9 @@
     //        kéo từ trái sang phải
                 if (e2.getX() - e1.getX() > SWIPE_THRESHOLD && Math.abs(x) > SWIPE_VELOCITY_THRESHOLD){
                     if (number_Menu == 0){
-                        loadFragment(new StoreFragment(), true);
+                        loadFragment(new ExploreFragment(), true);
                     } else if(number_Menu == 1){
-                        loadFragment(new StoreFragment(), true);
+                        loadFragment(new ExploreFragment(), true);
                         bottomNavigationView.getMenu().findItem(R.id.navigation_store).setChecked(true);
                         number_Menu = 0;
                     } else {

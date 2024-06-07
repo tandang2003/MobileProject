@@ -1,20 +1,13 @@
-package com.example.mobileproject.fragment;
+package com.example.mobileproject.activity;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.mobileproject.R;
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileActivity extends AppCompatActivity {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_editprofile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_editprofile); // Assuming you keep the layout name the same
     }
 }
