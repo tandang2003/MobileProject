@@ -47,6 +47,12 @@
         <activity
             android:name=".activity.ErrorDialog"
             android:exported="true" />
+        <activity
+            android:name=".activity.LibraryActivity"
+            android:exported="true" />
+       <activity
+            android:name=".activity.ExploreActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
