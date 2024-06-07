@@ -2,188 +2,308 @@ package com.example.mobileproject.activity.auth;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mobileproject.activity.ErrorDialog;
+import com.example.mobileproject.api.ApiAuthentication;
+import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.databinding.ActivityVerifyBinding;
 import com.example.mobileproject.R;
+import com.example.mobileproject.dto.request.ForgetPasswordRequest;
+import com.example.mobileproject.dto.request.ResetPasswordRequest;
+import com.example.mobileproject.dto.response.ApiResponse;
+import com.example.mobileproject.util.Exception;
+import com.example.mobileproject.util.Util;
+import com.google.android.gms.common.api.Api;
+import com.google.android.material.button.MaterialButton;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class VerifyActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
+public class VerifyActivity extends Dialog {
+    private EditText editText1, editText2, editText3, editText4, editText5, editText6;
+    private TextView countDown;
+    private MaterialButton verifyBtn;
+    private LinearLayout resend, descriptionCountDown;
+    private boolean resendEnable;
+    private int resendTime = 60;
+    private String emailSend;
+    private int selectedEditTextPosition = 0;
+private Context context;
+    public VerifyActivity(@NonNull Context context, String email) {
+        super(context);
+        this.context = context;
+        emailSend = email;
+        resendEnable = false;
+        resendTime = 60;
+    }
 
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler(Looper.myLooper());
-    private View mContentView;
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
-            if (Build.VERSION.SDK_INT >= 30) {
-                mContentView.getWindowInsetsController().hide(
-                        WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-            } else {
-                // Note that some of these constants are new as of API 16 (Jelly Bean)
-                // and API 19 (KitKat). It is safe to use them, as they are inlined
-                // at compile-time and do nothing on earlier devices.
-                mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-            }
-        }
-    };
-    private View mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    if (AUTO_HIDE) {
-                        delayedHide(AUTO_HIDE_DELAY_MILLIS);
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    view.performClick();
-                    break;
-                default:
-                    break;
-            }
-            return false;
-        }
-    };
-    private ActivityVerifyBinding binding;
+//    public VerifyActivity() {
+//        resendEnable = false;
+//        resendTime = 60;
+//    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set transparent background
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        emailSend = String.valueOf(getContext().getIntent().getBundleExtra("email"));
 
-        binding = ActivityVerifyBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        setContentView(R.layout.activity_verify);
+        TextView email = findViewById(R.id.email);
+        email.setText(emailSend);
+        editText1 = findViewById(R.id.editText1);
+        editText2 = findViewById(R.id.editText2);
+        editText3 = findViewById(R.id.editText3);
+        editText4 = findViewById(R.id.editText4);
+        editText5 = findViewById(R.id.editText5);
+        editText6 = findViewById(R.id.editText6);
 
-        mVisible = true;
-        mControlsView = binding.fullscreenContentControls;
-        mContentView = binding.fullscreenContent;
 
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
+        countDown = findViewById(R.id.countDown);
+        descriptionCountDown = findViewById(R.id.countDownLayout);
+        verifyBtn = findViewById(R.id.verifyBtn);
+        resend = findViewById(R.id.resend);
+        editText1.addTextChangedListener(textWatcher);
+        editText2.addTextChangedListener(textWatcher);
+        editText3.addTextChangedListener(textWatcher);
+        editText4.addTextChangedListener(textWatcher);
+        editText5.addTextChangedListener(textWatcher);
+        editText6.addTextChangedListener(textWatcher);
+
+        resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+                if (resendEnable) {
+                    resend(emailSend);
+                }
             }
         });
+        unableBtn();
+        showKeyBoard(editText1);
+        startCountDownTimer();
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
+    }
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (editable.length() > 0) {
+                if (selectedEditTextPosition <5) {
+
+                    switch (selectedEditTextPosition) {
+                        case 0:
+                            showKeyBoard(editText2);
+                            break;
+                        case 1:
+                            showKeyBoard(editText3);
+                            break;
+                        case 2:
+                            showKeyBoard(editText4);
+                            break;
+                        case 3:
+                            showKeyBoard(editText5);
+                            break;
+                        case 4:
+                            showKeyBoard(editText6);
+                            break;
+                    }
+                    selectedEditTextPosition++;
+                    System.out.println("selectedEditTextPosition: " + selectedEditTextPosition);
+                } else {
+                    enableBtn();
+                }
+
+            }
+        }
+    };
+
+    private void enableBtn() {
+        verifyBtn.setTextColor(getContext().getResources().getColor(R.color.brown));
+        verifyBtn.setStrokeColor(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe)));
+        verifyBtn.setBackgroundTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe)));
+        verifyBtn.setOnClickListener(view -> {
+            String code = editText1.getText().toString() + editText2.getText().toString() + editText3.getText().toString() + editText4.getText().toString() + editText5.getText().toString() + editText6.getText().toString();
+        resetPassword(code, emailSend);
+        });
+    }
+
+    private void unableBtn() {
+        verifyBtn.setTextColor(getContext().getResources().getColor(R.color.brown_light));
+        verifyBtn.setStrokeColor(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe_light)));
+        verifyBtn.setBackgroundTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe_light)));
+        verifyBtn.setOnClickListener(view -> {
+            Toast.makeText(VerifyActivity.this.getContext(), "Please enter the code", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void showKeyBoard(EditText editText) {
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    private void startCountDownTimer() {
+
+        new CountDownTimer(resendTime * 1000, 1000) {
+            @Override
+            public void onTick(long l) {
+                resendTime--;
+                countDown.setText(String.valueOf(resendTime));
+            }
+
+            @Override
+            public void onFinish() {
+                resendEnable = true;
+                descriptionCountDown.setVisibility(View.GONE);
+                resend.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
-    }
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DEL) {
+            unableBtn();
+            switch (selectedEditTextPosition-1) {
+                case 0:
+                    showKeyBoard(editText1);
+                    break;
+                case 1:
+                    showKeyBoard(editText2);
+                    break;
+                case 2:
+                    showKeyBoard(editText3);
+                    break;
+                case 3:
+                    showKeyBoard(editText4);
+                    break;
+                case 4:
+                    showKeyBoard(editText5);
+                    break;
+                case 5:
+                    showKeyBoard(editText6);
+                    break;
+            }
+            if (selectedEditTextPosition > 0) {
+                selectedEditTextPosition--;
+            }
+            System.out.println("selectedEditTextPosition del: " + selectedEditTextPosition);
         }
+        return super.onKeyUp(keyCode, event);
     }
 
-    private void hide() {
-        // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.GONE);
-        mVisible = false;
+    public void resetPassword(String token, String email) {
+        ApiService.apiService.create(ApiAuthentication.class)
+                .resetPassword(
+                        ResetPasswordRequest.builder()
+                                .email(email)
+                                .token(token)
+                                .build()
+                ).enqueue(new Callback<ApiResponse<Void>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                        if (response.isSuccessful()) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                    .setTitle(response.body().getMessage())
+//                                    .setMessage("Welcome to EBook!")
+                                    .setPositiveButton("OK", (dialogInterface, i) -> {
+                                        dialogInterface.dismiss();
+                                        VerifyActivity.this.dismiss();
+                                        ((ForgetPasswordActivity)context).finish();
+                                    })
+                                    .create();
+                            alertDialog.show();
+//                            VerifyActivity.this.dismiss();
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+                        } else {
+                            System.out.println("still");
+                            ApiResponse<?> apiResponse = Util.getInstance().cenvertErrorBody(response.errorBody());
+                            Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<Void>> call, Throwable throwable) {
+                        VerifyActivity.this.dismiss();
+                        ErrorDialog dialog = new ErrorDialog(getContext(), Exception.FAILURE_CALL_API.getMessage());
+                        dialog.show();
+                    }
+                });
     }
 
-    private void show() {
-        // Show the system bar
-        if (Build.VERSION.SDK_INT >= 30) {
-            mContentView.getWindowInsetsController().show(
-                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-        } else {
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        }
-        mVisible = true;
 
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-    }
+    private void resend(String email) {
 
-    /**
-     * Schedules a call to hide() in delay milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        ApiService.apiService.create(ApiAuthentication.class)
+                .forgetPassword(ForgetPasswordRequest.
+                        builder().
+                        email(email).
+                        build()
+                ).enqueue(new Callback<ApiResponse<Void>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+
+                        if (response.isSuccessful()) {
+                            resendEnable = false;
+                            resendTime = 60;
+                            resend.setVisibility(View.GONE);
+                            descriptionCountDown.setVisibility(View.VISIBLE);
+                            startCountDownTimer();
+//                            Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            ApiResponse<?> apiResponse = Util.getInstance().cenvertErrorBody(response.errorBody());
+                            Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<Void>> call, Throwable throwable) {
+                        ErrorDialog dialog = new ErrorDialog(getContext(), Exception.FAILURE_CALL_API.getMessage());
+                        dialog.show();
+                    }
+                });
     }
 }

@@ -2,26 +2,39 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExploreActivity">
-        <State />
-      </entry>
-      <entry key="LoginActivity">
+      <entry key="ForgetPass">
         <State>
-          <targetSelectedWithDropDown>
+          <runningDeviceTargetSelectedWithDropDown>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="D:\Android device\.android\avd\Pixel_7_API_25.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="QWNNTS7XBURK8XXW" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-06-04T09:17:05.907619100Z" />
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-06-07T15:38:21.020913400Z" />
         </State>
       </entry>
-      <entry key="MainActivity">
+      <entry key="ForgetPasswordActivity">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="QWNNTS7XBURK8XXW" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-06-07T15:49:13.065283600Z" />
+        </State>
+      </entry>
+      <entry key="LoginActivity">
         <State />
       </entry>
       <entry key="Unnamed">

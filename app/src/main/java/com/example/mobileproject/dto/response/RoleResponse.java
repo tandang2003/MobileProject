@@ -1,4 +1,4 @@
-package edu.vn.hcmuaf.ebook.dto.response;
+package com.example.mobileproject.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
