@@ -42,7 +42,7 @@
             android:name=".activity.SignUpDialog"
             android:exported="true" />
         <activity
-            android:name=".activity.ForgetPassDialog"
+            android:name=".activity.ForgetPasswordActivity"
             android:exported="true" />
         <activity
             android:name=".activity.ErrorDialog"

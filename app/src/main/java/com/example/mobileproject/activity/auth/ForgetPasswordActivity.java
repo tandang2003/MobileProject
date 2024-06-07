@@ -17,10 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ForgetPassDialog extends Dialog {
+public class ForgetPasswordActivity extends Dialog {
     private TextInputEditText email;
 
-    public ForgetPassDialog(@NonNull Context context) {
+    public ForgetPasswordActivity(@NonNull Context context) {
         super(context);
     }
 

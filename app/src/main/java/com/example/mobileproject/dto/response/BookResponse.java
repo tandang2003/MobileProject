@@ -1,8 +1,7 @@
-package com.example.mobileproject.dto.response;
+package edu.vn.hcmuaf.ebook.dto.response;
 
-import com.example.mobileproject.model.Author;
-import com.example.mobileproject.model.Category;
-
+import edu.vn.hcmuaf.ebook.entity.Author;
+import edu.vn.hcmuaf.ebook.entity.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookResponse {
     String title;
-    private List<CategoryResponse> categories;
-    private List<AuthorResponse> authors;
+    List<Author> authors;
+    List<Category> categories;
     String imageUrl;
 }

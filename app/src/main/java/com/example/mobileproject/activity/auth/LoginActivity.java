@@ -9,19 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.api.ApiAuthentication;
-import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.AuthenticationResponse;
-import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.model.AuthenticationRequest;
 import com.example.mobileproject.sharedPreference.GetData;
 import com.example.mobileproject.util.Exception;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ForgetPassDialog forgetPass = new ForgetPassDialog(LoginActivity.this);
+                ForgetPasswordActivity forgetPass = new ForgetPasswordActivity(LoginActivity.this);
                 forgetPass.show();
             }
         });
