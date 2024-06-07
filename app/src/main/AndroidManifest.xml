@@ -53,6 +53,9 @@
        <activity
             android:name=".activity.ExploreActivity"
             android:exported="true" />
+       <activity
+            android:name=".activity.RecyclerActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
