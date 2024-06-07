@@ -2,7 +2,11 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="Run">
+      <entry key="ExploreActivity">
+        <State />
+      </entry>
+      <entry key="MainActivity">
+
         <State />
       </entry>
     </value>
