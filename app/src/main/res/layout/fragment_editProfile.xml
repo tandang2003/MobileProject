@@ -4,30 +4,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SettingFragment">
+    tools:context=".fragment.EditProfile"
+    >
+
 
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/title_Setting" >
+        app:layout_behavior="@string/title_editProfile" >
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bgBottomNavigation"
             app:titleTextColor="@color/colorIcon"
-            app:title="@string/title_Setting" />
-
+            app:navigationIcon="@drawable/arrow_back_24px"
+            app:title="@string/title_editProfile"
+            />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="80dp">
+            android:layout_height="200dp"
+            android:paddingTop="80dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:src="@drawable/logo_orange" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Tải lên tệp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="220dp"
+            android:orientation="vertical"
+            android:gravity="center">
             <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-20dp">
-
+                android:layout_height="200dp"
+                >
                 <TableRow
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
@@ -35,15 +62,14 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/account_box_24px" />
+                        android:src="@drawable/badge_24px"
+                        android:layout_gravity="center_vertical"/>
 
-                    <TextView
-                        android:layout_width="200dp"
+                    <EditText
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="10"
-                        android:text="Thông tin người dùng"
+                        android:text="Nguyễn Hửu Tính"
                         android:textSize="20dp" />
                 </TableRow>
 
@@ -55,58 +81,24 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/download_done_24px" />
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/mail_24px" />
 
-                    <TextView
-                        android:layout_width="200dp"
+                    <EditText
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Quản lý bộ nhớ"
-                        android:textSize="20sp" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/inbox_customize_24px" />
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Chủ đề"
-                        android:textSize="20sp" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/logout_24px" />
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Đăng xuất"
-                        android:textSize="20sp" />
+                        android:text="21130202@st.hcmuaf.edu.vn"
+                        android:textSize="20dp" />
                 </TableRow>
             </TableLayout>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Cập nhật"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAlignment="center" />
         </LinearLayout>
     </FrameLayout>
 </FrameLayout>

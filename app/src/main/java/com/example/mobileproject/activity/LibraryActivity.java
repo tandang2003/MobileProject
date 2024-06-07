@@ -1,4 +1,4 @@
-    package com.example.mobileproject;
+    package com.example.mobileproject.activity;
     
     import android.os.Bundle;
     import android.view.GestureDetector;
@@ -14,9 +14,13 @@
     import androidx.fragment.app.FragmentManager;
     import androidx.fragment.app.FragmentTransaction;
 
+    import com.example.mobileproject.R;
+    import com.example.mobileproject.fragment.LibraryFragment;
+    import com.example.mobileproject.fragment.SettingFragment;
+    import com.example.mobileproject.fragment.StoreFragment;
     import com.google.android.material.bottomnavigation.BottomNavigationView;
     
-    public class MainActivity extends AppCompatActivity {
+    public class LibraryActivity extends AppCompatActivity {
     
     //    @Override
     //    protected void onCreate(Bundle savedInstanceState) {
