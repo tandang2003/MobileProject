@@ -39,13 +39,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SignUp"
+            android:name=".activity.SignUpDialog"
             android:exported="true" />
         <activity
-            android:name=".activity.ForgetPass"
+            android:name=".activity.ForgetPassDialog"
             android:exported="true" />
         <activity
-            android:name=".activity.Error"
+            android:name=".activity.ErrorDialog"
             android:exported="true" />
         <activity
             android:name=".activity.LibraryActivity"

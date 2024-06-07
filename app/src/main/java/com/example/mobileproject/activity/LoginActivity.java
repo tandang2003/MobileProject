@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignUp signUp = new SignUp(LoginActivity.this);
+                SignUpDialog signUp = new SignUpDialog(LoginActivity.this);
                 signUp.show();
             }
         });
@@ -69,24 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ForgetPass forgetPass = new ForgetPass(LoginActivity.this);
+                ForgetPassDialog forgetPass = new ForgetPassDialog(LoginActivity.this);
                 forgetPass.show();
             }
         });
 
-    }
-    private void book(){
-        ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
-
-            }
-        });
     }
 
     private void authentication() {
@@ -106,19 +93,19 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(GetData.getInstance().getString("token"));
                         //TODO:change to home page
                     } else {
-                        Error error = new Error(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
-                        error.show();
+                        ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
+                        errorDialog.show();
                     }
                 } else {
-                    Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                    error.show();
+                    ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                    errorDialog.show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
-                Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                error.show();
+                ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                errorDialog.show();
             }
         });
     }
