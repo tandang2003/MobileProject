@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void book(){
-        ApiService.apiService.create(ApiBook.class).getBook().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
+        ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
 
