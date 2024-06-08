@@ -1,4 +1,4 @@
-package com.example.mobileproject.activity;
+package com.example.mobileproject.dialog.auth;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.mobileproject.R;
+import com.example.mobileproject.activity.ErrorDialog;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.request.UserCreationRequest;

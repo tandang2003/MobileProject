@@ -4,4 +4,8 @@
     <string name="title_Library">Library</string>
     <string name="title_Setting">Setting</string>
     <string name="title_editProfile">Edit Profile</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_verify">VerifyActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

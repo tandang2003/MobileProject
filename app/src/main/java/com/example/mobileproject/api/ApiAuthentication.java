@@ -1,5 +1,7 @@
 package com.example.mobileproject.api;
 
+import com.example.mobileproject.dto.request.ForgetPasswordRequest;
+import com.example.mobileproject.dto.request.ResetPasswordRequest;
 import com.example.mobileproject.dto.request.UserCreationRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.AuthenticationResponse;
@@ -22,6 +24,8 @@ public interface ApiAuthentication extends ApiService{
     @POST("users")
     Call<ApiResponse<UserResponse>>register(@Body UserCreationRequest userRegisterRequest);
 
-    @POST("")
-    Call<ApiResponse<UserResponse>>forgetPassword(@Field("email") String email);
+    @POST("users/forget-password")
+    Call<ApiResponse<Void>>forgetPassword(@Body ForgetPasswordRequest forgetPasswordRequest);
+    @POST("users/reset-password")
+    Call<ApiResponse<Void>>resetPassword(@Body ResetPasswordRequest request);
 }
