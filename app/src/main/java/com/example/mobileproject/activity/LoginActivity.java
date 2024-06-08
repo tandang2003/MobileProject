@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignUp signUp = new SignUp(LoginActivity.this);
+                SignUpDialog signUp = new SignUpDialog(LoginActivity.this);
                 signUp.show();
             }
         });
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ForgetPass forgetPass = new ForgetPass(LoginActivity.this);
+                ForgetPassDialog forgetPass = new ForgetPassDialog(LoginActivity.this);
                 forgetPass.show();
             }
         });
@@ -86,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     private void authentication() {
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
@@ -93,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         ApiService.apiService.create(ApiAuthentication.class)
                 .authenticate(authenticationRequest)
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
+
                     @Override
                     public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
                         if (response.isSuccessful()) {
@@ -121,5 +123,6 @@ public class LoginActivity extends AppCompatActivity {
                         error.show();
                     }
                 });
+
     }
 }

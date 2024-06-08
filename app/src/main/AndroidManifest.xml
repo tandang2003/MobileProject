@@ -26,6 +26,7 @@
 <!--            </intent-filter>-->
         </activity>
 
+
         <activity android:name=".activity.LoginActivity"
             android:exported="true"/>
         <activity android:name=".activity.SignUp" />
@@ -33,6 +34,7 @@
         <activity android:name=".activity.Error" />
         <activity android:name=".activity.LibraryActivity" />
         <activity android:name=".activity.EditProfileActivity" />
+
 
     </application>
 
