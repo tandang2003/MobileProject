@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.EditProfileActivity"
-    >
+    tools:context=".activity.EditProfileActivity">
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/title_editProfile" >
+        app:layout_behavior="@string/title_editProfile">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
@@ -18,8 +18,8 @@
             android:background="@color/bgBottomNavigation"
             app:titleTextColor="@color/colorIcon"
             app:navigationIcon="@drawable/arrow_back_24px"
-            app:title="@string/title_editProfile"
-            />
+            app:title="@string/title_editProfile" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -40,28 +40,30 @@
                 android:text="Tải lên tệp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:textAlignment="center"/>
-
+                android:textAlignment="center" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="220dp"
             android:orientation="vertical"
             android:gravity="center">
+
             <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                >
+                android:layout_height="200dp">
+
                 <TableRow
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="30dp"
                         android:src="@drawable/badge_24px"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical" />
 
                     <EditText
                         android:layout_width="300dp"
@@ -90,6 +92,7 @@
                         android:textSize="20dp" />
                 </TableRow>
             </TableLayout>
+
             <Button
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

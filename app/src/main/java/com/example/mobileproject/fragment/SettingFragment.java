@@ -31,8 +31,10 @@ public class SettingFragment extends Fragment {
         // Set click listeners for each TableRow
         rowUserInfo.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
+
         rowMemoryManagement.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Quản lý bộ nhớ clicked", Toast.LENGTH_SHORT).show();
             // Handle the event for memory management row click

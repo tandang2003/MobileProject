@@ -1,5 +1,6 @@
 package com.example.mobileproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -39,11 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.login_page);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         email = findViewById(R.id.emailLoginInput);
         password = findViewById(R.id.passwordLoginInput);
@@ -75,16 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    private void book(){
+
+    private void book() {
         ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
-
+                // Handle the response
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
-
+                // Handle the failure
             }
         });
     }
@@ -96,31 +93,33 @@ public class LoginActivity extends AppCompatActivity {
         ApiService.apiService.create(ApiAuthentication.class)
                 .authenticate(authenticationRequest)
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
-                if (response.isSuccessful()) {
-                    ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
-                    AuthenticationResponse result = authenticationResponse.getResult();
-                    if(result.isAuthenticated()){
-                        GetData.getInstance().setString("token", result.getToken());
-                        System.out.println(GetData.getInstance().getString("token"));
-                        //TODO:change to home page
-                    } else {
-                        Error error = new Error(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
+                    @Override
+                    public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
+                        if (response.isSuccessful()) {
+                            ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
+                            AuthenticationResponse result = authenticationResponse.getResult();
+                            if (result.isAuthenticated()) {
+                                GetData.getInstance().setString("token", result.getToken());
+                                System.out.println(GetData.getInstance().getString("token"));
+                                // Chuyển đến LibraryActivity sau khi đăng nhập thành công
+                                Intent intent = new Intent(LoginActivity.this, LibraryActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Error error = new Error(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
+                                error.show();
+                            }
+                        } else {
+                            Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                            error.show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
+                        Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
                         error.show();
                     }
-                } else {
-                    Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                    error.show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
-                Error error = new Error(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                error.show();
-            }
-        });
+                });
     }
-
 }
