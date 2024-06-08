@@ -1,6 +1,5 @@
 package com.example.mobileproject.activity.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.request.ForgetPasswordRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.util.Exception;
+import com.example.mobileproject.util.Util;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -65,7 +65,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 ).enqueue(new Callback<ApiResponse<Void>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-
+                        System.out.println(response.body().toString());
                         if (response.isSuccessful()) {
 //                            Bundle bundle = new Bundle();
 //                            bundle.putString("email", email);
@@ -77,12 +77,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                             verifyActivity.show();
 //                            Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            ApiResponse<?> apiResponse = Util.getInstance().convertErrorBody(response.errorBody());
+                            Toast.makeText(ForgetPasswordActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse<Void>> call, Throwable throwable) {
+                        System.out.println(throwable.getMessage()+"____________________"+ throwable.getLocalizedMessage());
                         ErrorDialog dialog = new ErrorDialog(ForgetPasswordActivity.this, Exception.FAILURE_CALL_API.getMessage());
                         dialog.show();
                     }

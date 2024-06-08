@@ -1,27 +1,18 @@
 package com.example.mobileproject.activity.auth;
 
-import android.annotation.SuppressLint;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -32,14 +23,12 @@ import android.widget.Toast;
 import com.example.mobileproject.activity.ErrorDialog;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
-import com.example.mobileproject.databinding.ActivityVerifyBinding;
 import com.example.mobileproject.R;
 import com.example.mobileproject.dto.request.ForgetPasswordRequest;
 import com.example.mobileproject.dto.request.ResetPasswordRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.util.Exception;
 import com.example.mobileproject.util.Util;
-import com.google.android.gms.common.api.Api;
 import com.google.android.material.button.MaterialButton;
 
 import retrofit2.Call;
@@ -260,7 +249,7 @@ private Context context;
 
                         } else {
                             System.out.println("still");
-                            ApiResponse<?> apiResponse = Util.getInstance().cenvertErrorBody(response.errorBody());
+                            ApiResponse<?> apiResponse = Util.getInstance().convertErrorBody(response.errorBody());
                             Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -294,7 +283,7 @@ private Context context;
                             startCountDownTimer();
 //                            Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
-                            ApiResponse<?> apiResponse = Util.getInstance().cenvertErrorBody(response.errorBody());
+                            ApiResponse<?> apiResponse = Util.getInstance().convertErrorBody(response.errorBody());
                             Toast.makeText(getContext(), apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }

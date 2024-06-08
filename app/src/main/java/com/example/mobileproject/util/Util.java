@@ -4,7 +4,6 @@ import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.response.ApiResponse;
 
 import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 public class Util {
     private static Util instance;
@@ -16,7 +15,7 @@ public class Util {
         }
         return instance;
     }
-    public  ApiResponse<?> cenvertErrorBody(ResponseBody responseBody) {
+    public  ApiResponse<?> convertErrorBody(ResponseBody responseBody) {
         ApiResponse<?> apiResponse = new ApiResponse<>();
         apiResponse = ApiService.gson.fromJson(responseBody.charStream(), apiResponse.getClass());
         return apiResponse;
