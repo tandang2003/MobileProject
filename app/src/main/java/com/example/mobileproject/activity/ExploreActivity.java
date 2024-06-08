@@ -1,8 +1,10 @@
-package com.example.mobileproject.activity;
+package com.example.mobileproject.fragment;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,18 +12,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileproject.R;
+import com.example.mobileproject.activity.BookAdapter;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.response.ApiResponse;
+import com.example.mobileproject.dto.response.AuthorResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CategoryResponse;
-import com.example.mobileproject.dto.response.AuthorResponse;
 import com.example.mobileproject.model.Author;
 import com.example.mobileproject.model.Book;
 import com.example.mobileproject.model.Category;
@@ -36,24 +41,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExploreActivity extends AppCompatActivity {
+public class ExploreFragment extends Fragment {
 
     private BookAdapter adapter;
     private LinearLayout categoryLayout;
     private LinearLayout booksListSection;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.explore_page);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_explore_page, container, false);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        booksListSection = findViewById(R.id.books_list_section);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        booksListSection = view.findViewById(R.id.books_list_section);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         adapter = new BookAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
-        categoryLayout = findViewById(R.id.category_layout);
+        categoryLayout = view.findViewById(R.id.category_layout);
 
         // Api lấy danh sách các cuốn sách
         ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
@@ -68,7 +73,7 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
                 // Xử lý lỗi khi gọi API sách
-                Toast.makeText(ExploreActivity.this, "Failed to load books", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load books", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -85,7 +90,7 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
                 // Xử lý lỗi khi gọi API sách
-                Toast.makeText(ExploreActivity.this, "Failed to load books", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load books", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -105,13 +110,13 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<List<CategoryResponse>>> call, Throwable throwable) {
                 // Xử lý lỗi khi gọi API danh mục
-                Toast.makeText(ExploreActivity.this, "Failed to load categories", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load categories", Toast.LENGTH_SHORT).show();
             }
         });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int center = recyclerView.getWidth() / 2;
                 for (int i = 0; i < recyclerView.getChildCount(); i++) {
@@ -123,6 +128,8 @@ public class ExploreActivity extends AppCompatActivity {
                 }
             }
         });
+
+        return view;
     }
 
     private List<Book> convertToBookList(List<BookResponse> bookResponses) {
@@ -159,7 +166,7 @@ public class ExploreActivity extends AppCompatActivity {
         categoryLayout.removeAllViews();
 
         for (String category : categories) {
-            Button button = new Button(this);
+            Button button = new Button(getContext());
             button.setText(category);
 
             // Tạo margin cho các button
@@ -190,18 +197,17 @@ public class ExploreActivity extends AppCompatActivity {
 
             button.setOnClickListener(v -> {
                 // Xử lý khi nhấn vào nút danh mục
-                Toast.makeText(ExploreActivity.this, "Selected category: " + category, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Selected category: " + category, Toast.LENGTH_SHORT).show();
             });
             categoryLayout.addView(button);
         }
     }
 
     private void displayBooks(List<Book> books) {
-        LinearLayout booksListSection = findViewById(R.id.books_list_section);
         booksListSection.removeAllViews();
 
         for (Book book : books) {
-            LinearLayout bookLayout = new LinearLayout(this);
+            LinearLayout bookLayout = new LinearLayout(getContext());
             bookLayout.setOrientation(LinearLayout.HORIZONTAL);
             bookLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -209,7 +215,7 @@ public class ExploreActivity extends AppCompatActivity {
             ));
             bookLayout.setPadding(0, 0, 0, 32);
 
-            ImageView bookImage = new ImageView(this);
+            ImageView bookImage = new ImageView(getContext());
             // Thay đổi kích thước của hình ảnh
             LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
                     200, // width lớn hơn
@@ -218,7 +224,7 @@ public class ExploreActivity extends AppCompatActivity {
             bookImage.setLayoutParams(imageParams);
             Picasso.get().load(book.getImageUrl()).into(bookImage);
 
-            LinearLayout bookInfoLayout = new LinearLayout(this);
+            LinearLayout bookInfoLayout = new LinearLayout(getContext());
             bookInfoLayout.setOrientation(LinearLayout.VERTICAL);
             bookInfoLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     0,
@@ -227,24 +233,24 @@ public class ExploreActivity extends AppCompatActivity {
             ));
             bookInfoLayout.setPadding(16, 0, 0, 0);
 
-            TextView bookTitle = new TextView(this);
+            TextView bookTitle = new TextView(getContext());
             bookTitle.setText(book.getTitle());
             bookTitle.setTextColor(getResources().getColor(R.color.white));
             bookTitle.setTextSize(16);
-            bookTitle.setPadding(0,0,0,50);
+            bookTitle.setPadding(0, 0, 0, 50);
             bookTitle.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
 
-            LinearLayout categoryLayout = new LinearLayout(this);
+            LinearLayout categoryLayout = new LinearLayout(getContext());
             categoryLayout.setOrientation(LinearLayout.HORIZONTAL);
             categoryLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             for (Category category : book.getCategories()) {
-                TextView categoryTextView = new TextView(this);
+                TextView categoryTextView = new TextView(getContext());
                 System.out.println("Danh muc:" + category.getName());
                 categoryTextView.setText(category.getName());
                 categoryTextView.setTextColor(getResources().getColor(R.color.white));
@@ -253,14 +259,14 @@ public class ExploreActivity extends AppCompatActivity {
                 categoryLayout.addView(categoryTextView);
             }
 
-            LinearLayout authorLayout = new LinearLayout(this);
+            LinearLayout authorLayout = new LinearLayout(getContext());
             authorLayout.setOrientation(LinearLayout.HORIZONTAL);
             authorLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             for (Author author : book.getAuthors()) {
-                TextView authorTextView = new TextView(this);
+                TextView authorTextView = new TextView(getContext());
                 authorTextView.setText("Author: " + author.getName());
                 authorTextView.setTextColor(getResources().getColor(R.color.white));
                 authorTextView.setPadding(4, 0, 4, 0);
@@ -272,14 +278,14 @@ public class ExploreActivity extends AppCompatActivity {
             bookInfoLayout.addView(categoryLayout);
             bookInfoLayout.addView(authorLayout);
 
-            LinearLayout optionsLayout = new LinearLayout(this);
+            LinearLayout optionsLayout = new LinearLayout(getContext());
             optionsLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
             ));
             optionsLayout.setGravity(Gravity.CENTER_VERTICAL);
 
-            ImageView optionsIcon = new ImageView(this);
+            ImageView optionsIcon = new ImageView(getContext());
             optionsIcon.setImageResource(R.drawable.ellipsis_vertical_solid);
             optionsIcon.setLayoutParams(new LinearLayout.LayoutParams(
                     100,
@@ -295,5 +301,4 @@ public class ExploreActivity extends AppCompatActivity {
             booksListSection.addView(bookLayout);
         }
     }
-
 }

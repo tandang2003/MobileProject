@@ -94,7 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                     AuthenticationResponse result = authenticationResponse.getResult();
                     if(result.isAuthenticated()){
                         GetData.getInstance().setString("token", result.getToken());
-                        //TODO:change to home page
+                        System.out.println(GetData.getInstance().getString("token"));
+                        // Chuyển đến LibraryActivity sau khi đăng nhập thành công
+                        Intent intent = new Intent(LoginActivity.this, LibraryActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else {
                         ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
                         errorDialog.show();
