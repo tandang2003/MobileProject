@@ -99,14 +99,12 @@ public class LoginActivity extends AppCompatActivity {
                         ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
                         errorDialog.show();
                     }
-                } else {
-                    ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                    errorDialog.show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
+                System.out.println(t.getMessage() );
                 ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
                 errorDialog.show();
             }

@@ -2,7 +2,6 @@ package com.example.mobileproject.dialog.auth;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -83,7 +82,7 @@ public class SignUpDialog extends BottomSheetDialog {
                                 errorDialog.show();
                             }
                         } else {
-                            ApiResponse<?> apiResponse = Util.getInstance().cenvertErrorBody(response.errorBody());
+                            ApiResponse<?> apiResponse = Util.getInstance().convertErrorBody(response.errorBody());
                             ErrorDialog errorDialog = new ErrorDialog(context, apiResponse.getMessage());
                             errorDialog.show();
                         }
