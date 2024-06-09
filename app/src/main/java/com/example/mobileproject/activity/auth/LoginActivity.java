@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.activity.ErrorDialog;
+import com.example.mobileproject.activity.LibraryActivity;
 import com.example.mobileproject.dialog.auth.SignUpDialog;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
@@ -87,20 +88,27 @@ public class LoginActivity extends AppCompatActivity {
                         .build()
                 )
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
-                if (response.isSuccessful()) {
-                    ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
-                    AuthenticationResponse result = authenticationResponse.getResult();
-                    if(result.isAuthenticated()){
-                        GetData.getInstance().setString("token", result.getToken());
-                        //TODO:change to home page
-                    } else {
-                        ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
-                        errorDialog.show();
+                    @Override
+                    public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
+                        if (response.isSuccessful()) {
+                            ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
+                            AuthenticationResponse result = authenticationResponse.getResult();
+                            if (result.isAuthenticated()) {
+                                GetData.getInstance().setString("token", result.getToken());
+                                System.out.println(GetData.getInstance().getString("token"));
+                                // Chuyển đến LibraryActivity sau khi đăng nhập thành công
+                                Intent intent = new Intent(LoginActivity.this, LibraryActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                ErrorDialog error = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
+                                error.show();
+                            }
+                        } else {
+                            ErrorDialog error = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                            error.show();
+                        }
                     }
-                }
-            }
 
             @Override
             public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
