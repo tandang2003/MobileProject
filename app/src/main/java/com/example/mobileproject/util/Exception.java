@@ -6,6 +6,9 @@ public enum Exception {
     NOT_FOUND_DATA(404, "Data not found", Context.MODE_PRIVATE),
     FAILURE_CALL_API(500, "Error system please try again later", Context.MODE_PRIVATE),
     UNAUTHORIZED(401, "Invalid Email or Password", Context.MODE_PRIVATE),
+    INVALID_EMAIL(400, "Invalid Email", Context.MODE_PRIVATE),
+    INVALID_PASSWORD(400, "Invalid Password", Context.MODE_PRIVATE),
+    INVALID_CONFIRM_PASSWORD(400, "Invalid Confirm Password", Context.MODE_PRIVATE),
     ;
     private String message;
     private int code;
