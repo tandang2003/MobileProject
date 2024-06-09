@@ -1,5 +1,6 @@
 package com.example.mobileproject.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -190,7 +191,12 @@ public class ExploreActivity extends AppCompatActivity {
 
             button.setOnClickListener(v -> {
                 // Xử lý khi nhấn vào nút danh mục
-                Toast.makeText(ExploreActivity.this, "Selected category: " + category, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ExploreActivity.this, "Selected category: " + category, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ExploreActivity.this, RecyclerActivity.class);
+                // Truyền giá trị selectedCategory qua Intent
+                intent.putExtra("SELECTED_CATEGORY", category);
+                // Khởi chạy Activity tiếp theo với Intent đã được thiết lập
+                startActivity(intent);
             });
             categoryLayout.addView(button);
         }

@@ -43,7 +43,7 @@ public class RecyclerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_book);
-
+        String selectedCategory = getIntent().getStringExtra("SELECTED_CATEGORY");
         booksListSection = findViewById(R.id.books_list_section);
         adapter = new BookAdapter(new ArrayList<>());
 
@@ -52,7 +52,8 @@ public class RecyclerActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Book> books = convertToBookList(response.body().getResult());
-                    displayBooks(books);
+                    List<Book> filteredBooks = filterBooksByCategory(books, selectedCategory);
+                    displayBooks(filteredBooks);
                 }
             }
 
@@ -226,4 +227,16 @@ public class RecyclerActivity extends AppCompatActivity {
         }
     }
 
+    private List<Book> filterBooksByCategory(List<Book> books, String category) {
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book : books) {
+            for (Category bookCategory : book.getCategories()) {
+                if (bookCategory.getName().equals(category)) {
+                    filteredBooks.add(book);
+                    break;
+                }
+            }
+        }
+        return filteredBooks;
+    }
 }
