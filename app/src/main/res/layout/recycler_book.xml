@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:paddingTop="16dp"
-        android:background="#1F1A16">
+        android:background="@color/brown">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/backIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,14 +39,14 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_below="@id/header_section"
-        android:background="#1F1A16">
+        android:background="@color/brown">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort by : Default"
             android:textSize="18sp"
-            android:textColor="#E9AC7F" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <ScrollView

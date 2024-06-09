@@ -56,6 +56,9 @@
        <activity
             android:name=".activity.RecyclerActivity"
             android:exported="true" />
+       <activity
+            android:name=".activity.BookDetailActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
