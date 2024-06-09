@@ -16,7 +16,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookResponse {
     String title;
-    private List<CategoryResponse> categories;
-    private List<AuthorResponse> authors;
+    List<CategoryResponse> categories;
+    List<AuthorResponse> authors;
     String imageUrl;
 }
