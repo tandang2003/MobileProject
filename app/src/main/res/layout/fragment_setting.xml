@@ -10,12 +10,12 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/title_Setting" >
+        app:layout_behavior="@string/title_Setting">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bgBottomNavigation"
+            android:background="#7b4b32"
             app:titleTextColor="@color/colorIcon"
             app:title="@string/title_Setting" />
 
@@ -23,15 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="80dp">
+
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-20dp">
 
                 <TableRow
+                    android:id="@+id/row_user_info"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="30dp"
@@ -48,6 +51,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/row_memory_management"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
@@ -68,6 +72,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/row_theme"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
@@ -88,6 +93,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/row_logout"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">

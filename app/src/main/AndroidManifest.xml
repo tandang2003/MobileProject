@@ -40,10 +40,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
 
-        <activity
-            android:name=".activity.auth.MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" /> <!-- <activity -->
+<!--        <activity-->
+<!--            android:name=".activity.auth.MapsActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/title_activity_maps" /> &lt;!&ndash; <activity &ndash;&gt;-->
         <!-- android:name=".MainActivity" -->
         <!-- android:exported="true"> -->
         <!-- <intent-filter> -->
@@ -75,6 +75,9 @@
             android:exported="true" />
         <activity
             android:name=".activity.ExploreActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.EditProfileActivity"
             android:exported="true" />
     </application>
 
