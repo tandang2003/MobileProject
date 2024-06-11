@@ -1,17 +1,20 @@
 package com.example.mobileproject.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mobileproject.R;
 import com.example.mobileproject.model.Book;
 import com.google.android.material.button.MaterialButton;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,42 +49,35 @@ public class BookDetailActivity extends AppCompatActivity {
         BookDetailAdapter adapter = new BookDetailAdapter(bookList);
         reviewRecyclerView.setAdapter(adapter);
 
+        // Get data from intent
+        String title = getIntent().getStringExtra("BOOK_TITLE");
+        String author = getIntent().getStringExtra("BOOK_AUTHOR");
+        String description = getIntent().getStringExtra("BOOK_DESCRIPTION");
+        String imageUrl = getIntent().getStringExtra("BOOK_IMAGE_URL");
+
+        // Set data to views
+        bookTitle.setText(title);
+        bookAuthor.setText(author);
+        bookDescription.setText(description);
+        Picasso.get().load(imageUrl).into(bookCover);
+
         // Set click listeners
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        backButton.setOnClickListener(v -> onBackPressed());
+
+        moreOptionsButton.setOnClickListener(v -> {
+            // Handle more options click
         });
 
-        moreOptionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle more options click
-            }
+        downloadButton.setOnClickListener(v -> {
+            // Handle download button click
         });
 
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle download button click
-            }
+        commentButton.setOnClickListener(v -> {
+            // Handle comment button click
         });
-
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle comment button click
-            }
-        });
-
-         bookTitle.setText("Eragon 3 (Brisingr) – Hòa Kiếm");
-         bookAuthor.setText("Tác giả: Christopher Paolini");
-         bookDescription.setText("About this book...");
     }
 
     private List<Book> getSampleBooks() {
-        List<Book> books = new ArrayList<>();
-        return books;
+        return new ArrayList<>();
     }
 }
