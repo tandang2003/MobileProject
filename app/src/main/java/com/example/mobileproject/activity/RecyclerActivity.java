@@ -1,10 +1,9 @@
 package com.example.mobileproject.activity;
 
-import android.graphics.drawable.GradientDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +42,22 @@ public class RecyclerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_book);
-        String selectedCategory = getIntent().getStringExtra("SELECTED_CATEGORY");
+
+        // Retrieve the button text from the Intent
+        String buttonText = getIntent().getStringExtra("BUTTON_TEXT");
+
+        // Find the TextView and set its text
+        TextView exploreText = findViewById(R.id.exploreText);
+        exploreText.setText(buttonText);
+
+        // Setup the back button to navigate back to ExploreActivity
+        ImageButton backIcon = findViewById(R.id.backIcon);
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(RecyclerActivity.this, ExploreActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         booksListSection = findViewById(R.id.books_list_section);
         adapter = new BookAdapter(new ArrayList<>());
 
@@ -52,7 +66,7 @@ public class RecyclerActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Book> books = convertToBookList(response.body().getResult());
-                    List<Book> filteredBooks = filterBooksByCategory(books, selectedCategory);
+                    List<Book> filteredBooks = filterBooksByCategory(books, buttonText);
                     displayBooks(filteredBooks);
                 }
             }
@@ -63,7 +77,7 @@ public class RecyclerActivity extends AppCompatActivity {
             }
         });
 
-        ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
+        ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>> () {
             @Override
             public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -78,7 +92,7 @@ public class RecyclerActivity extends AppCompatActivity {
             }
         });
 
-        ApiService.apiService.create(ApiCategory.class).getCategories().enqueue(new Callback<ApiResponse<List<CategoryResponse>>>() {
+        ApiService.apiService.create(ApiCategory.class).getCategories().enqueue(new Callback<ApiResponse<List<CategoryResponse>>> () {
             @Override
             public void onResponse(Call<ApiResponse<List<CategoryResponse>>> call, Response<ApiResponse<List<CategoryResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -94,7 +108,6 @@ public class RecyclerActivity extends AppCompatActivity {
                 Toast.makeText(RecyclerActivity.this, "Failed to load categories", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private List<Book> convertToBookList(List<BookResponse> bookResponses) {
@@ -125,7 +138,6 @@ public class RecyclerActivity extends AppCompatActivity {
         }
         return books;
     }
-
 
     private void displayBooks(List<Book> books) {
         LinearLayout booksListSection = findViewById(R.id.books_list_section);
