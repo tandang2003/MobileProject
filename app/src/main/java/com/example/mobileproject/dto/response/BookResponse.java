@@ -15,8 +15,12 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookResponse {
+    long id;
     String title;
-    List<CategoryResponse> categories;
-    List<AuthorResponse> authors;
+    List<Author> authors;
+    List<Category> categories;
+    List<CommentResponse> comments;
+    double price;
+    private int pages;
     String imageUrl;
 }

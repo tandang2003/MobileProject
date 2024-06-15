@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authentication() {
+        System.out.println("authentication_______________________");
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
         AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailText, passwordText);
@@ -90,11 +91,13 @@ public class LoginActivity extends AppCompatActivity {
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
+                        System.out.println(response.body().toString());
                         if (response.isSuccessful()) {
                             ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
                             AuthenticationResponse result = authenticationResponse.getResult();
                             if (result.isAuthenticated()) {
                                 GetData.getInstance().setString("token", result.getToken());
+                                GetData.getInstance().setBoolean("auth", result.isAuthenticated());
                                 System.out.println(GetData.getInstance().getString("token"));
                                 // Chuyển đến LibraryActivity sau khi đăng nhập thành công
                                 Intent intent = new Intent(LoginActivity.this, LibraryActivity.class);

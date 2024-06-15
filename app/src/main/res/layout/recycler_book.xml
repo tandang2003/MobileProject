@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RecyclerActivity">
+
+    <RelativeLayout
+        android:id="@+id/header_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:background="@color/brown">
+
+        <ImageButton
+            android:id="@+id/backIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back_24px"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:background="@null"/>
+
+        <TextView
+            android:id="@+id/exploreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recycler"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:layout_toEndOf="@id/backIcon"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/news_book_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_below="@id/header_section"
+        android:background="@color/brown">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort by : Default"
+            android:textSize="18sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/books_list_section_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news_book_section"
+        android:background="@color/background_color">
+
+        <LinearLayout
+            android:id="@+id/books_list_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <!-- Danh sách các cuốn sách sẽ được thêm vào đây động -->
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
