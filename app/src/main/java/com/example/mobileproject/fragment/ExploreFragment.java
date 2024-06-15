@@ -1,7 +1,9 @@
 package com.example.mobileproject.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.activity.BookAdapter;
+import com.example.mobileproject.activity.BookDetailActivity;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
@@ -142,7 +145,6 @@ public class ExploreFragment extends Fragment {
             List<Category> categories = new ArrayList<>();
             for (Category categoryResponse : bookResponse.getCategories()) {
                 Category category = new Category();
-                System.out.println(categoryResponse.getName());
                 category.setName(categoryResponse.getName());
                 categories.add(category);
             }
@@ -160,7 +162,6 @@ public class ExploreFragment extends Fragment {
         }
         return books;
     }
-
 
     private void displayCategories(Set<String> categories) {
         categoryLayout.removeAllViews();
@@ -216,13 +217,23 @@ public class ExploreFragment extends Fragment {
             bookLayout.setPadding(0, 0, 0, 32);
 
             ImageView bookImage = new ImageView(getContext());
-            // Thay đổi kích thước của hình ảnh
             LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
                     200, // width lớn hơn
                     250  // height lớn hơn
             );
             bookImage.setLayoutParams(imageParams);
             Picasso.get().load(book.getImageUrl()).into(bookImage);
+
+            // Thêm sự kiện click vào ảnh
+            bookImage.setOnClickListener(v -> {
+                Log.d("ExploreFragment", "Image clicked for book: " + book.getTitle()); // Sử dụng Log.d để kiểm tra click event
+                Intent intent = new Intent(getContext(), BookDetailActivity.class);
+                intent.putExtra("BOOK_TITLE", book.getTitle());
+                intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName()); // Assuming there's at least one author
+                intent.putExtra("BOOK_DESCRIPTION", "About this book..."); // Replace with actual description
+                intent.putExtra("BOOK_IMAGE_URL", book.getImageUrl());
+                startActivity(intent);
+            });
 
             LinearLayout bookInfoLayout = new LinearLayout(getContext());
             bookInfoLayout.setOrientation(LinearLayout.VERTICAL);
@@ -251,7 +262,6 @@ public class ExploreFragment extends Fragment {
             ));
             for (Category category : book.getCategories()) {
                 TextView categoryTextView = new TextView(getContext());
-                System.out.println("Danh muc:" + category.getName());
                 categoryTextView.setText(category.getName());
                 categoryTextView.setTextColor(getResources().getColor(R.color.white));
                 categoryTextView.setPadding(4, 0, 4, 40);
