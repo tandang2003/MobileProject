@@ -1,4 +1,4 @@
-package com.example.mobileproject.activity.auth;
+package com.example.mobileproject.dialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobileproject.activity.ErrorDialog;
+import com.example.mobileproject.activity.auth.ForgetPasswordActivity;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.R;
@@ -39,7 +41,7 @@ import retrofit2.Response;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class VerifyActivity extends Dialog {
+public class VerifyDialog extends Dialog {
     private EditText editText1, editText2, editText3, editText4, editText5, editText6;
     private TextView countDown;
     private MaterialButton verifyBtn;
@@ -48,19 +50,16 @@ public class VerifyActivity extends Dialog {
     private int resendTime = 60;
     private String emailSend;
     private int selectedEditTextPosition = 0;
+    private ImageView backBtn;
+
 private Context context;
-    public VerifyActivity(@NonNull Context context, String email) {
+    public VerifyDialog(@NonNull Context context, String email) {
         super(context);
         this.context = context;
         emailSend = email;
         resendEnable = false;
         resendTime = 60;
     }
-
-//    public VerifyActivity() {
-//        resendEnable = false;
-//        resendTime = 60;
-//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ private Context context;
 //        emailSend = String.valueOf(getContext().getIntent().getBundleExtra("email"));
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        setContentView(R.layout.activity_verify);
+        setContentView(R.layout.verify_dialog);
         TextView email = findViewById(R.id.email);
         email.setText(emailSend);
         editText1 = findViewById(R.id.editText1);
@@ -80,6 +79,7 @@ private Context context;
         editText5 = findViewById(R.id.editText5);
         editText6 = findViewById(R.id.editText6);
 
+        backBtn= findViewById(R.id.backBtn);
 
         countDown = findViewById(R.id.countDown);
         descriptionCountDown = findViewById(R.id.countDownLayout);
@@ -92,6 +92,10 @@ private Context context;
         editText5.addTextChangedListener(textWatcher);
         editText6.addTextChangedListener(textWatcher);
 
+
+        backBtn.setOnClickListener(view -> {
+            VerifyDialog.this.dismiss();
+        });
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +168,7 @@ private Context context;
         verifyBtn.setStrokeColor(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe_light)));
         verifyBtn.setBackgroundTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.organe_light)));
         verifyBtn.setOnClickListener(view -> {
-            Toast.makeText(VerifyActivity.this.getContext(), "Please enter the code", Toast.LENGTH_SHORT).show();
+            Toast.makeText(VerifyDialog.this.getContext(), "Please enter the code", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -235,16 +239,21 @@ private Context context;
                     @Override
                     public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                         if (response.isSuccessful()) {
-                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                                    .setTitle(response.body().getMessage())
-//                                    .setMessage("Welcome to EBook!")
-                                    .setPositiveButton("OK", (dialogInterface, i) -> {
-                                        dialogInterface.dismiss();
-                                        VerifyActivity.this.dismiss();
-                                        ((ForgetPasswordActivity)context).finish();
-                                    })
-                                    .create();
-                            alertDialog.show();
+//                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+//                                    .setTitle(response.body().getMessage())
+////                                    .setMessage("Welcome to EBook!")
+//                                    .setPositiveButton("OK", (dialogInterface, i) -> {
+//                                        dialogInterface.dismiss();
+//                                        VerifyDialog.this.dismiss();
+//                                        ((ForgetPasswordActivity)context).finish();
+//                                    })
+//                                    .create();
+//                            alertDialog.show();
+                            ErrorDialog dialog = new ErrorDialog(getContext(), response.body().getMessage(),"Ok","Success");
+//                            dialog.setBtnText("OK");
+//                            dialog.setTitle("Success");
+                            dialog.show();
+
 //                            VerifyActivity.this.dismiss();
 
                         } else {
@@ -256,7 +265,7 @@ private Context context;
 
                     @Override
                     public void onFailure(Call<ApiResponse<Void>> call, Throwable throwable) {
-                        VerifyActivity.this.dismiss();
+                        VerifyDialog.this.dismiss();
                         ErrorDialog dialog = new ErrorDialog(getContext(), Exception.FAILURE_CALL_API.getMessage());
                         dialog.show();
                     }

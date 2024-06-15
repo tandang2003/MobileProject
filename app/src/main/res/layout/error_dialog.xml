@@ -23,9 +23,9 @@
             android:minWidth="230dp">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Error"
                 android:textColor="@color/white"
                 android:textSize="22sp" />
             <TextView
@@ -43,11 +43,10 @@
                 android:paddingRight="12dp">
 
                 <TextView
-                    android:id="@+id/cancel"
+                    android:id="@+id/btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:text="Cancel"
                     android:textColor="@color/organe"
                     android:textSize="17sp" />
             </GridLayout>

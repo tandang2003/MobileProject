@@ -16,8 +16,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Book {
+    long id;
     String title;
     List<Author> authors;
     List<Category> categories;
+    double price;
+    private int pages;
     String imageUrl;
 }

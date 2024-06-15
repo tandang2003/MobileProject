@@ -25,90 +25,85 @@
             android:paddingTop="80dp">
 
             <TableLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-20dp">
+                android:layout_marginLeft="20dp">
 
                 <TableRow
                     android:id="@+id/row_user_info"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/account_box_24px" />
 
                     <TextView
-                        android:layout_width="200dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="10"
                         android:text="Thông tin người dùng"
+                        android:layout_marginStart="30dp"
+
                         android:textSize="20dp" />
                 </TableRow>
 
-                <TableRow
-                    android:id="@+id/row_memory_management"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+<!--                <TableRow-->
+<!--                    android:id="@+id/row_memory_management"-->
+<!--                    android:gravity="center"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginBottom="10dp">-->
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/download_done_24px" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/download_done_24px" />-->
 
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Quản lý bộ nhớ"
-                        android:textSize="20sp" />
-                </TableRow>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:text="Quản lý bộ nhớ"-->
+<!--                        android:layout_marginStart="30dp"-->
+<!--                        android:textSize="20sp" />-->
+<!--                </TableRow>-->
 
-                <TableRow
-                    android:id="@+id/row_theme"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+<!--                <TableRow-->
+<!--                    android:id="@+id/row_theme"-->
+<!--                    android:gravity="center"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginBottom="10dp">-->
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/inbox_customize_24px" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/inbox_customize_24px" />-->
 
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Chủ đề"
-                        android:textSize="20sp" />
-                </TableRow>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginStart="30dp"-->
+
+<!--                        android:text="Chủ đề"-->
+<!--                        android:textSize="20sp" />-->
+<!--                </TableRow>-->
 
                 <TableRow
                     android:id="@+id/row_logout"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/logout_24px" />
 
                     <TextView
-                        android:layout_width="200dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
+                        android:layout_marginStart="30dp"
+
                         android:text="Đăng xuất"
                         android:textSize="20sp" />
                 </TableRow>
