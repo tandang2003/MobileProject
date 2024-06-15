@@ -1,11 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MobileProject</string>
-    <string name="title_store">Store</string>
-    <string name="title_Library">Library</string>
-    <string name="title_Setting">Setting</string>
-    <string name="title_editProfile">Edit Profile</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_verify">VerifyActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
