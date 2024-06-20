@@ -18,11 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.activity.BookAdapter;
 import com.example.mobileproject.activity.BookDetailActivity;
+import com.example.mobileproject.activity.ExploreActivity;
+import com.example.mobileproject.activity.RecyclerActivity;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
@@ -58,6 +61,8 @@ public class ExploreFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         booksListSection = view.findViewById(R.id.books_list_section);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
         adapter = new BookAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
@@ -102,11 +107,14 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onResponse(Call<ApiResponse<List<CategoryResponse>>> call, Response<ApiResponse<List<CategoryResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Set<String> categories = new HashSet<>();
+                    Set<Category> categories = new HashSet<>();
                     for (CategoryResponse categoryResponse : response.body().getResult()) {
-                        categories.add(categoryResponse.getName());
+                        categories.add(convertToCategory(categoryResponse));
                     }
                     displayCategories(categories);
+                } else {
+                    // Xử lý trường hợp API trả về nhưng không thành công hoặc body null
+                    Toast.makeText(getContext(), "Failed to load categories", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -117,22 +125,30 @@ public class ExploreFragment extends Fragment {
             }
         });
 
+
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int center = recyclerView.getWidth() / 2;
                 for (int i = 0; i < recyclerView.getChildCount(); i++) {
-                    RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-                    int childCenter = (viewHolder.itemView.getLeft() + viewHolder.itemView.getRight()) / 2;
-                    float scale = 1.0f - Math.abs(center - childCenter) / (float) (center * 2);
-                    viewHolder.itemView.setScaleX(scale + 0.5f);
-                    viewHolder.itemView.setScaleY(scale + 0.5f);
+                    View child = recyclerView.getChildAt(i);
+                    int childCenter = (child.getLeft() + child.getRight()) / 2;
+                    float scale = 1.0f - Math.abs(center - childCenter) / (float) center;
+                    scale = Math.max(0.7f, scale); // Đảm bảo scale không nhỏ hơn 0.7
+                    child.setScaleX(scale);
+                    child.setScaleY(scale);
                 }
             }
         });
-
         return view;
+    }
+
+    // Phương thức chuyển đổi từ CategoryResponse sang Category
+    private Category convertToCategory(CategoryResponse categoryResponse) {
+        // Giả sử Category và CategoryResponse có các thuộc tính tương tự
+        return new Category((int) categoryResponse.getId(), categoryResponse.getName());
     }
 
     private List<Book> convertToBookList(List<BookResponse> bookResponses) {
@@ -143,7 +159,7 @@ public class ExploreFragment extends Fragment {
             book.setImageUrl(bookResponse.getImageUrl());
 
             List<Category> categories = new ArrayList<>();
-            for (CategoryResponse categoryResponse : bookResponse.getCategories()) {
+            for (Category categoryResponse : bookResponse.getCategories()) {
                 Category category = new Category();
                 category.setName(categoryResponse.getName());
                 categories.add(category);
@@ -151,7 +167,7 @@ public class ExploreFragment extends Fragment {
             book.setCategories(categories);
 
             List<Author> authors = new ArrayList<>();
-            for (AuthorResponse authorResponse : bookResponse.getAuthors()) {
+            for (Author authorResponse : bookResponse.getAuthors()) {
                 Author author = new Author();
                 author.setName(authorResponse.getName());
                 authors.add(author);
@@ -163,12 +179,12 @@ public class ExploreFragment extends Fragment {
         return books;
     }
 
-    private void displayCategories(Set<String> categories) {
+    private void displayCategories(Set<Category> categories) {
         categoryLayout.removeAllViews();
 
-        for (String category : categories) {
+        for (Category category : categories) {
             Button button = new Button(getContext());
-            button.setText(category);
+            button.setText(category.getName());
 
             // Tạo margin cho các button
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -198,7 +214,15 @@ public class ExploreFragment extends Fragment {
 
             button.setOnClickListener(v -> {
                 // Xử lý khi nhấn vào nút danh mục
-                Toast.makeText(getContext(), "Selected category: " + category, Toast.LENGTH_SHORT).show();
+                // Handle the button click event
+                Intent intent = new Intent(getContext(), RecyclerActivity.class);
+                // Pass the value of the clicked button through the Intent
+                System.out.println("123432:    " + category.getId());
+                Bundle bundle= new Bundle();
+                bundle.putString("category", String.valueOf(category.getId()));
+                intent.putExtra("BUTTON_TEXT",bundle ); // assuming 'category' holds the button text value
+                // Start RecyclerActivity with the Intent
+                startActivity(intent);
             });
             categoryLayout.addView(button);
         }
