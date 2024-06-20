@@ -2,6 +2,7 @@ package com.example.mobileproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -44,38 +46,69 @@ public class RecyclerActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_book);
 
         // Retrieve the button text from the Intent
-        String buttonText = getIntent().getStringExtra("BUTTON_TEXT");
+
 
         // Find the TextView and set its text
         TextView exploreText = findViewById(R.id.exploreText);
-        exploreText.setText(buttonText);
+//        exploreText.setText(buttonText);
 
         // Setup the back button to navigate back to ExploreActivity
         ImageButton backIcon = findViewById(R.id.backIcon);
         backIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(RecyclerActivity.this, ExploreActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(RecyclerActivity.this, ExploreActivity.class);
+//            startActivity(intent);
             finish();
         });
 
         booksListSection = findViewById(R.id.books_list_section);
         adapter = new BookAdapter(new ArrayList<>());
+        Intent intent = getIntent();
+        String buttonText = null;
 
-        ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Book> books = convertToBookList(response.body().getResult());
-                    List<Book> filteredBooks = filterBooksByCategory(books, buttonText);
-                    displayBooks(filteredBooks);
+        if (intent != null) {
+            try {
+                Bundle bundle =getIntent().getBundleExtra("BUTTON_TEXT");
+                buttonText=bundle.getString("category");
+                Log.d("RecyclerActivity", "buttonText: " + buttonText); // Log giá trị của buttonText
+            } catch (ClassCastException e) {
+                Long buttonLong = intent.getLongExtra("BUTTON_TEXT", -1L);
+                if (buttonLong != -1L) {
+                    buttonText = String.valueOf(buttonLong);
+                    Log.d("RecyclerActivity", "Converted buttonLong to buttonText: " + buttonText); // Log giá trị của buttonLong sau khi chuyển đổi
                 }
             }
+        }
 
-            @Override
-            public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
-                Toast.makeText(RecyclerActivity.this, "Failed to load books", Toast.LENGTH_SHORT).show();
+        if (buttonText != null && !buttonText.isEmpty()) {
+            try {
+                int categoryId = Integer.parseInt(buttonText);
+                Log.d("RecyclerActivity", "categoryId: " + categoryId); // Log giá trị của categoryId
+                ApiService.apiService.create(ApiCategory.class).getCategoryById(categoryId).enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            List<BookResponse> bookResponses = response.body().getResult();
+                            List<Book> books = convertToBookList(bookResponses);
+                            displayBooks(books);
+                        } else {
+                            Toast.makeText(RecyclerActivity.this, "Failed to load books", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable throwable) {
+                        Toast.makeText(RecyclerActivity.this, "Failed to load books", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (NumberFormatException e) {
+                Log.e("RecyclerActivity", "Invalid category ID: " + buttonText, e);
+                Toast.makeText(RecyclerActivity.this, "Invalid category ID", Toast.LENGTH_SHORT).show();
             }
-        });
+        } else {
+            Log.e("RecyclerActivity", "Category ID is empty or null: " + buttonText);
+            Toast.makeText(RecyclerActivity.this, "Category ID is empty or null", Toast.LENGTH_SHORT).show();
+        }
+
 
         ApiService.apiService.create(ApiBook.class).getBooks().enqueue(new Callback<ApiResponse<List<BookResponse>>> () {
             @Override
@@ -239,16 +272,16 @@ public class RecyclerActivity extends AppCompatActivity {
         }
     }
 
-    private List<Book> filterBooksByCategory(List<Book> books, String category) {
-        List<Book> filteredBooks = new ArrayList<>();
-        for (Book book : books) {
-            for (Category bookCategory : book.getCategories()) {
-                if (bookCategory.getName().equals(category)) {
-                    filteredBooks.add(book);
-                    break;
-                }
-            }
-        }
-        return filteredBooks;
-    }
+//    private List<Book> filterBooksByCategory(List<Book> books, String category) {
+//        List<Book> filteredBooks = new ArrayList<>();
+//        for (Book book : books) {
+//            for (Category bookCategory : book.getCategories()) {
+//                if (bookCategory.getName().equals(category)) {
+//                    filteredBooks.add(book);
+//                    break;
+//                }
+//            }
+//        }
+//        return filteredBooks;
+//    }
 }

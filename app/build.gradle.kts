@@ -50,6 +50,10 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.71828")
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
+
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // Import the Firebase BoM

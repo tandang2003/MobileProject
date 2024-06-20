@@ -14,6 +14,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.activity.EditProfileActivity;
+import com.example.mobileproject.activity.auth.LoginActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.example.mobileproject.activity.ErrorDialog;
 import com.example.mobileproject.activity.admin.BookManagerActivity;
 import com.example.mobileproject.activity.auth.LoginActivity;
@@ -31,13 +38,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class SettingFragment extends Fragment {
     private TableRow rowUserInfo, rowLogout, rowBookManager;
+
+    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        // Initialize Firebase Auth and Google Sign-In Client
+        mAuth = FirebaseAuth.getInstance();
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         // Find TableRow elements by their IDs
         rowUserInfo = view.findViewById(R.id.row_user_info);
@@ -53,28 +68,19 @@ public class SettingFragment extends Fragment {
         checkingRole();
 
         rowLogout.setOnClickListener(v -> {
-            String token = GetData.getInstance().getString("token");
-            System.out.println("token checking1: " + token);
-            ApiService.apiService.create(ApiAuthentication.class)
-                    .logout(LogoutRequest.builder().token(token).build())
-                    .enqueue(new Callback<ApiResponse<Void>>() {
-                        @Override
-                        public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-                            if (response.isSuccessful()) {
-                                GetData.getInstance().remove("token");
-                                GetData.getInstance().remove("auth");
-                                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ApiResponse<Void>> call, Throwable throwable) {
-                            ErrorDialog errorDialog = new ErrorDialog(getContext(), Exception.FAILURE_CALL_API.getMessage());
-                            errorDialog.show();
-                        }
-                    });
-            // Handle the event for logout row click
+            // Sign out from Firebase Auth
+            mAuth.signOut();
+
+            // Sign out from Google Sign-In
+            mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), task -> {
+                // After sign out, navigate to LoginActivity or your desired destination
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();
+            });
+
         });
 
 

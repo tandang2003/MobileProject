@@ -1,12 +1,15 @@
 {
   "project_info": {
+
     "project_number": "184386862939",
     "project_id": "ebook-c86ab",
     "storage_bucket": "ebook-c86ab.appspot.com"
+
   },
   "client": [
     {
       "client_info": {
+
         "mobilesdk_app_id": "1:184386862939:android:4c0f1d52f20d2b6822647e",
         "android_client_info": {
           "package_name": "com.example.mobileproject"
@@ -15,6 +18,7 @@
       "oauth_client": [],
       "api_key": [
         {
+
           "current_key": "AIzaSyAcY-MW5IUuyYT3A-r2jbInc9STWBObeys"
         }
       ],
