@@ -1,7 +1,5 @@
 package com.example.mobileproject.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +13,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class Book {
-    Long id;
-    String title;
-    List<Author> authors;
-    List<Category> categories;
+public class Comment {
+    int id;
     String content;
-    String imageUrl;
 }

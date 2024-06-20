@@ -27,4 +27,10 @@ public class GetData {
     public boolean getBoolean(String key) {
         return mySharedPreference.getBoolean(key);
     }
+    public String getToken() {
+        return mySharedPreference.getString("token");
+    }
+    public void setToken(String token) {
+        mySharedPreference.setString("token", token);
+    }
 }
