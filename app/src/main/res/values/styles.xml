@@ -8,4 +8,14 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+
+    <style name="SwitchButton" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlActivated">@color/organe</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/gray</item>
+        <item name="trackColorActive">@color/organe_light</item>
+        <item name="trackColorInactive">@color/gray</item>
+        <!-- inactive track color (30% transparency) -->
+    </style>
 </resources>

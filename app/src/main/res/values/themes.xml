@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:colorPrimaryDark">@color/brown</item>
+        <item name="android:windowBackground">@color/bg</item>
     </style>
 
     <style name="Theme.MobileProject" parent="Base.Theme.MobileProject" />

@@ -20,7 +20,10 @@ public class Book {
     String title;
     List<Author> authors;
     List<Category> categories;
+    List<Comment> comments;
     double price;
     private int pages;
     String imageUrl;
+    int status;
+    private String content;
 }

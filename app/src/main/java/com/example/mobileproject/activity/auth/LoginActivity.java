@@ -2,18 +2,18 @@ package com.example.mobileproject.activity.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileproject.R;
 import com.example.mobileproject.activity.ErrorDialog;
 import com.example.mobileproject.activity.LibraryActivity;
-import com.example.mobileproject.dialog.auth.SignUpDialog;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
+import com.example.mobileproject.dialog.auth.SignUpDialog;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.AuthenticationResponse;
 import com.example.mobileproject.model.AuthenticationRequest;
@@ -37,13 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.login_activity);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         email = findViewById(R.id.emailLoginInput);
         password = findViewById(R.id.passwordLoginInput);
@@ -77,10 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authentication() {
-        System.out.println("authentication_______________________");
+        Log.i("LoginActivity", "authentication_______________________");
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailText, passwordText);
         ApiService.apiService.create(ApiAuthentication.class)
                 .authenticate(AuthenticationRequest
                         .builder()
@@ -91,14 +84,15 @@ public class LoginActivity extends AppCompatActivity {
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
-                        System.out.println(response.body().toString());
+                        Log.i("LoginActivity", response.toString());
                         if (response.isSuccessful()) {
+                            Log.i("LoginActivity", response.body().toString());
                             ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
                             AuthenticationResponse result = authenticationResponse.getResult();
                             if (result.isAuthenticated()) {
                                 GetData.getInstance().setString("token", result.getToken());
                                 GetData.getInstance().setBoolean("auth", result.isAuthenticated());
-                                System.out.println(GetData.getInstance().getString("token"));
+                                Log.i("LoginActivity", GetData.getInstance().getString("token"));
                                 // Chuyển đến LibraryActivity sau khi đăng nhập thành công
                                 Intent intent = new Intent(LoginActivity.this, LibraryActivity.class);
                                 startActivity(intent);
@@ -113,13 +107,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
-            @Override
-            public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
-                System.out.println(t.getMessage() );
-                ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
-                errorDialog.show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
+                        Log.i("LoginActivity", t.getMessage());
+                        ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                        errorDialog.show();
+                    }
+                });
     }
 
 }
