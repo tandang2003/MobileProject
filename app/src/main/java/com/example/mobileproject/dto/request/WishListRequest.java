@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdationRequest {
-    String fullName;
-    String avatar;
+public class WishListRequest {
+    long bookId;
 }

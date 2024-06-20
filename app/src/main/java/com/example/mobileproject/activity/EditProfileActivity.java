@@ -37,13 +37,10 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
-
-import com.google.firebase.ktx.Firebase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 
 import java.io.File;
 
@@ -62,7 +59,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private LinearProgressIndicator progress;
     private Uri img;
     private String urlUpload;
-    private final String urlFirebaseStorage = "gs://ebook-b513c.appspot.com/";
+    private final String urlFirebaseStorage = "gs://ebook-c86ab.appspot.com/";
+
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -83,9 +81,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile); // Assuming you keep the layout name the same
         //get token
-        FirebaseApp.initializeApp(this);
-        FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
-
+        FirebaseApp.initializeApp(EditProfileActivity.this);
         storageReference = FirebaseStorage.getInstance().getReference();
 
 
