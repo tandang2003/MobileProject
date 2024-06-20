@@ -1,7 +1,6 @@
-package com.example.mobileproject.dto.response;
+package com.example.mobileproject.dto.request;
 
 import lombok.*;
-
 import lombok.experimental.FieldDefaults;
 
 @Data
@@ -9,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentResponse {
-    Long id;
-    String content;
-    UserResponse user;
+public class WishListRequest {
+    long bookId;
 }

@@ -3,9 +3,15 @@ package com.example.mobileproject.activity.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import android.view.View;
+import android.widget.TextView;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileproject.R;
@@ -163,10 +169,11 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void authenticateWithEmailPassword() {
+
+    private void authentication() {
+        Log.i("LoginActivity", "authentication_______________________");
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailText, passwordText);
         ApiService.apiService.create(ApiAuthentication.class)
                 .authenticate(AuthenticationRequest
                         .builder()
@@ -177,13 +184,17 @@ public class LoginActivity extends AppCompatActivity {
                 .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
+                        Log.i("LoginActivity", response.toString());
                         if (response.isSuccessful()) {
+                            Log.i("LoginActivity", response.body().toString());
                             ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
                             AuthenticationResponse result = authenticationResponse.getResult();
                             if (result.isAuthenticated()) {
                                 GetData.getInstance().setString("token", result.getToken());
+
                                 // Example: Navigate to LibraryActivity after successful login
                                 goToLibraryActivity();
+
                             } else {
                                 ErrorDialog error = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
                                 error.show();
@@ -196,11 +207,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable t) {
+
                         Log.e(TAG, "Authentication API call failed", t);
+
                         ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
                         errorDialog.show();
                     }
                 });
+
     }
 
     private void showSignUpDialog() {
@@ -211,6 +225,7 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToForgotPassword() {
         Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(intent);
+
     }
 
     private void goToLibraryActivity() {
