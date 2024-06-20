@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     tools:context=".activity.EditProfileActivity">
 
     <LinearLayout
@@ -42,7 +43,7 @@
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:gravity="center_horizontal"
                     android:layout_marginStart="-24dp"
-                    android:text="Forget pasword"
+                    android:text="Profile"
                     android:textColor="@color/header_color_font"
                     android:textSize="22sp" />
             </LinearLayout>

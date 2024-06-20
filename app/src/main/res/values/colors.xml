@@ -6,6 +6,7 @@
     <color name="green">#FF00FF00</color>
     <color name="gray">#888888</color>
     <color name="organe">#FFB884</color>
+    <color name="strong_organe">#FF6E0E</color>
     <color name="organe_light">#FDCAA4</color>
     <color name="brown">#6D380C</color>
     <color name="brown_light">#A88567</color>
@@ -29,4 +30,5 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="transparent">#0000ffff</color>
 </resources>
