@@ -17,7 +17,7 @@ public interface ApiService {
 //            .readTimeout(20, TimeUnit.SECONDS)
             .build();
     Retrofit apiService = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/ebook/")
+            .baseUrl("http://10.0.2.16:8080/ebook/")
 //            .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
