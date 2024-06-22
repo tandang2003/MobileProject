@@ -86,6 +86,8 @@ public class BookManagerActivity extends AppCompatActivity {
                 .authors(bookResponse.getAuthors())
                 .categories(bookResponse.getCategories())
                 .comments(bookResponse.getComments())
+                .price(bookResponse.getPrice())
+                .pages(bookResponse.getPages())
                 .imageUrl(bookResponse.getImageUrl())
                 .status(bookResponse.getStatus())
                 .content(bookResponse.getContent())

@@ -24,4 +24,5 @@ public class BookResponse {
     String content;
     String imageUrl;
     int status;
+    private String content;
 }
