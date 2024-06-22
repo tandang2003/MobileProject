@@ -134,7 +134,7 @@ public class ExploreActivity extends AppCompatActivity {
             book.setImageUrl(bookResponse.getImageUrl());
 
             List<Category> categories = new ArrayList<>();
-            for (Category categoryResponse : bookResponse.getCategories()) {
+            for (CategoryResponse categoryResponse : bookResponse.getCategories()) {
                 Category category = new Category();
                 System.out.println(categoryResponse.getName());
                 category.setName(categoryResponse.getName());
@@ -143,7 +143,7 @@ public class ExploreActivity extends AppCompatActivity {
             book.setCategories(categories);
 
             List<Author> authors = new ArrayList<>();
-            for (Author authorResponse : bookResponse.getAuthors()) {
+            for (AuthorResponse authorResponse : bookResponse.getAuthors()) {
                 Author author = new Author();
                 author.setName(authorResponse.getName());
                 authors.add(author);

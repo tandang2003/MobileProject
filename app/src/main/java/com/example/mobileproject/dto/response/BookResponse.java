@@ -2,7 +2,6 @@ package com.example.mobileproject.dto.response;
 
 import com.example.mobileproject.model.Author;
 import com.example.mobileproject.model.Category;
-import com.example.mobileproject.model.Comment;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,9 +17,9 @@ import java.util.Set;
 public class BookResponse {
     Long id;
     String title;
-    List<Category> categories;
-    List<Author> authors;
-    List<Comment> comments;
+    List<CategoryResponse> categories;
+    List<AuthorResponse> authors;
+    List<CommentResponse> comments;
     String content;
     String imageUrl;
     int status;

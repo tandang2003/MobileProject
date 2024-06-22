@@ -16,5 +16,4 @@ import lombok.Setter;
 public class Comment {
     int id;
     String content;
-    User user;
 }

@@ -162,7 +162,7 @@ public class ExploreFragment extends Fragment {
             book.setId(bookResponse.getId());
 
             List<Category> categories = new ArrayList<>();
-            for (Category categoryResponse : bookResponse.getCategories()) {
+            for (CategoryResponse categoryResponse : bookResponse.getCategories()) {
                 Category category = new Category();
                 category.setName(categoryResponse.getName());
                 categories.add(category);
@@ -170,7 +170,7 @@ public class ExploreFragment extends Fragment {
             book.setCategories(categories);
 
             List<Author> authors = new ArrayList<>();
-            for (Author authorResponse : bookResponse.getAuthors()) {
+            for (AuthorResponse authorResponse : bookResponse.getAuthors()) {
                 Author author = new Author();
                 author.setName(authorResponse.getName());
                 authors.add(author);
