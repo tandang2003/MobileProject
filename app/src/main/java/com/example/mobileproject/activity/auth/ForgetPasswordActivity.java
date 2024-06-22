@@ -10,6 +10,7 @@ import com.example.mobileproject.R;
 import com.example.mobileproject.activity.ErrorDialog;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
+import com.example.mobileproject.dialog.VerifyDialog;
 import com.example.mobileproject.dto.request.ForgetPasswordRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.util.Exception;
@@ -56,7 +57,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     private void forgetPassword(String email) {
         if (validateEmail(email)) return;
-
         ApiService.apiService.create(ApiAuthentication.class)
                 .forgetPassword(ForgetPasswordRequest.
                         builder().
@@ -73,7 +73,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 //                            intent.putExtra("email", bundle);
 //                            startActivity(intent);
 
-                            VerifyActivity verifyActivity=new VerifyActivity(ForgetPasswordActivity.this,email);
+                            VerifyDialog verifyActivity=new VerifyDialog(ForgetPasswordActivity.this,email);
                             verifyActivity.show();
 //                            Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         } else {

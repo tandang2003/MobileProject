@@ -2,6 +2,7 @@ package com.example.mobileproject.util;
 
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.response.ApiResponse;
+import com.example.mobileproject.sharedPreference.GetData;
 
 import okhttp3.ResponseBody;
 
@@ -19,5 +20,10 @@ public class Util {
         ApiResponse<?> apiResponse = new ApiResponse<>();
         apiResponse = ApiService.gson.fromJson(responseBody.charStream(), apiResponse.getClass());
         return apiResponse;
+    }
+
+    public String getToken() {
+        String header="Bearer ";
+        return header + GetData.getInstance().getString("token");
     }
 }

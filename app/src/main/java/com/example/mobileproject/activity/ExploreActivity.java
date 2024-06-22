@@ -196,7 +196,9 @@ public class ExploreActivity extends AppCompatActivity {
                 // Handle the button click event
                 Intent intent = new Intent(ExploreActivity.this, RecyclerActivity.class);
                 // Pass the value of the clicked button through the Intent
-                intent.putExtra("BUTTON_TEXT", category); // assuming 'category' holds the button text value
+                Bundle bundle= new Bundle();
+                bundle.putString("category", category);
+                intent.putExtra("BUTTON_TEXT", bundle); // assuming 'category' holds the button text value
                 // Start RecyclerActivity with the Intent
                 startActivity(intent);
             });

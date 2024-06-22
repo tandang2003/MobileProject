@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentRequest {
+public class ChangeStatusBookRequest {
     Long bookId;
-    String content;
 }

@@ -22,4 +22,6 @@ public class Book {
     List<Category> categories;
     String content;
     String imageUrl;
+    int status;
+    private String content;
 }
