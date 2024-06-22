@@ -30,6 +30,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_24px" />
 
+    <ImageButton
+        android:id="@+id/loveButton"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@null"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/like" />
+
     <ImageView
         android:id="@+id/imageButton2"
         android:layout_width="15dp"
