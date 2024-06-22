@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassButton = findViewById(R.id.forgotPasswordButton);
 
         // Set up button listeners
-        loginButton.setOnClickListener(view -> authenticateWithEmailPassword());
+        loginButton.setOnClickListener(view -> authentication());
         googleSignInButton.setOnClickListener(view -> signInWithGoogle());
         signUp.setOnClickListener(view -> showSignUpDialog());
         forgetPassButton.setOnClickListener(view -> navigateToForgotPassword());
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account.getIdToken());
         } catch (ApiException e) {
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.w(TAG, "signInResult:failed code=" + e.getMessage());
             // Handle Google Sign In failed
             ErrorDialog error = new ErrorDialog(LoginActivity.this, "Google sign-in failed.");
             error.show();
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                                         // Navigate to LibraryActivity after successful login
                                         goToLibraryActivity();
                                     } else {
-                                        Log.w(TAG, "getIdToken:failure", task.getException());
+                                        Log.w(TAG, "getIdToken:failure " + task.getException().getMessage());
                                         ErrorDialog error = new ErrorDialog(LoginActivity.this, "Failed to get ID token.");
                                         error.show();
                                     }
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Log.w(TAG, "signInWithCredential:failure" + task.getException().getMessage());
                         ErrorDialog error = new ErrorDialog(LoginActivity.this, "Firebase Authentication failed.");
                         error.show();
                     }
@@ -171,7 +171,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void authentication() {
-        Log.i("LoginActivity", "authentication_______________________");
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
         ApiService.apiService.create(ApiAuthentication.class)
