@@ -1,5 +1,6 @@
 package com.example.mobileproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.mobileproject.dialog.comment.CommentDialog;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CommentResponse;
+import com.example.mobileproject.model.Comment;
 import com.example.mobileproject.sharedPreference.GetData;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
@@ -68,6 +70,12 @@ public class BookDetailActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> onBackPressed());
 
         commentButton.setOnClickListener(v -> showCommentDialog(bookId));
+        readButton.setOnClickListener(v -> {
+            Intent intent = new Intent(BookDetailActivity.this, ReadingActivity.class);
+            intent.putExtra("BOOK_CONTENT", bookContent.getText().toString());
+            intent.putExtra("BOOK_TITLE", bookTitle.getText().toString());
+            startActivity(intent);
+        });
 
         fetchComments(bookId);
     }
@@ -109,10 +117,10 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void displayComments(List<CommentResponse> comments) {
+    private void displayComments(List<Comment> comments) {
         cmtListSection.removeAllViews();
 
-        for (CommentResponse comment : comments) {
+        for (Comment comment : comments) {
             View commentView = getLayoutInflater().inflate(R.layout.item_comment, cmtListSection, false);
             TextView authorTextView = commentView.findViewById(R.id.commentAuthor);
             TextView contentTextView = commentView.findViewById(R.id.commentText);

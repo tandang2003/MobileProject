@@ -151,16 +151,16 @@ public class RecyclerActivity extends AppCompatActivity {
             book.setImageUrl(bookResponse.getImageUrl());
 
             List<Category> categories = new ArrayList<>();
-            for (Category categoryResponse : bookResponse.getCategories()) {
+            for (Category categoryResponse : book.getCategories()) {
                 Category category = new Category();
-                System.out.println(categoryResponse.getName());
+                System.out.println(category.getName());
                 category.setName(categoryResponse.getName());
                 categories.add(category);
             }
             book.setCategories(categories);
 
             List<Author> authors = new ArrayList<>();
-            for (Author authorResponse : bookResponse.getAuthors()) {
+            for (Author authorResponse : book.getAuthors()) {
                 Author author = new Author();
                 author.setName(authorResponse.getName());
                 authors.add(author);
