@@ -33,5 +33,11 @@ public class GetData {
 
     public void setBoolean(String auth, boolean b) {
         mySharedPreference.putBoolean(auth, b);
+
+    public String getToken() {
+        return mySharedPreference.getString("token");
+    }
+    public void setToken(String token) {
+        mySharedPreference.setString("token", token);
     }
 }

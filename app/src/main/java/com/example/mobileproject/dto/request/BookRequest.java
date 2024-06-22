@@ -14,6 +14,7 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookRequest {
+    Long id;
     String title;
     double price;
     Set<Category> categories;

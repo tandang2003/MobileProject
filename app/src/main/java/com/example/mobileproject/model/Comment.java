@@ -1,20 +1,20 @@
 package com.example.mobileproject.model;
 
-import com.example.mobileproject.dto.response.UserResponse;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Comment {
-    Long id;
+    int id;
     String content;
-    UserResponse user;
+    User user;
 }
