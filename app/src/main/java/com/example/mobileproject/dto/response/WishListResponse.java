@@ -1,4 +1,4 @@
-package com.example.mobileproject.dto.request;
+package com.example.mobileproject.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentRequest {
-    long bookId;
-    String content;
+public class WishListResponse {
+    String userId;
+    Long bookId;
 }

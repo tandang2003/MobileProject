@@ -1,5 +1,6 @@
 package com.example.mobileproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,18 +16,14 @@ import com.example.mobileproject.R;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dialog.comment.CommentDialog;
-import com.example.mobileproject.dto.request.WishListRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CommentResponse;
-import com.example.mobileproject.dto.response.WishListResponse;
 import com.example.mobileproject.model.Comment;
 import com.example.mobileproject.sharedPreference.GetData;
-import com.example.mobileproject.util.Exception;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,12 +32,11 @@ import retrofit2.Response;
 
 public class BookDetailActivity extends AppCompatActivity {
 
-    private ImageButton backButton,loveButton;
+    private ImageButton backButton;
     private ImageView bookCover, moreOptionsButton;
     private TextView bookTitle, bookAuthor, bookContent, ratingTitle;
     private MaterialButton readButton, commentButton;
     private LinearLayout cmtListSection;
-    private boolean isInWishlist = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +55,6 @@ public class BookDetailActivity extends AppCompatActivity {
         readButton = findViewById(R.id.readButton);
         commentButton = findViewById(R.id.commentButton);
         cmtListSection = findViewById(R.id.cmt_list_section);
-        loveButton = findViewById(R.id.loveButton);
 
         String title = getIntent().getStringExtra("BOOK_TITLE");
         String author = getIntent().getStringExtra("BOOK_AUTHOR");
@@ -76,27 +70,14 @@ public class BookDetailActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> onBackPressed());
 
         commentButton.setOnClickListener(v -> showCommentDialog(bookId));
-
-        fetchComments(bookId);
-//        checkWishlistStatus();
-        ApiService.apiService.create(ApiBook.class).getBooksInWishList().enqueue(new Callback<ApiResponse<List<BookResponse>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<BookResponse>>> call, Response<ApiResponse<List<BookResponse>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<BookResponse> wishlist = response.body().getResult();
-                    isInWishlist = wishlist.stream().anyMatch(book -> book.getId().equals(Long.parseLong(bookId)));
-                    Log.d("BookDetailActivity", "isInWishlist: " + isInWishlist);
-                    updateLoveButtonUI();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<BookResponse>>> call, Throwable t) {
-                Log.e("BookDetailActivity", "Failed to check wishlist status", t);
-            }
+        readButton.setOnClickListener(v -> {
+            Intent intent = new Intent(BookDetailActivity.this, ReadingActivity.class);
+            intent.putExtra("BOOK_CONTENT", bookContent.getText().toString());
+            intent.putExtra("BOOK_TITLE", bookTitle.getText().toString());
+            startActivity(intent);
         });
 
-        loveButton.setOnClickListener(v -> toggleWishlist());
+        fetchComments(bookId);
     }
 
     private void showCommentDialog(String bookId) {
@@ -153,76 +134,5 @@ public class BookDetailActivity extends AppCompatActivity {
         super.onResume();
         String bookId = getIntent().getStringExtra("BOOK_ID");
         fetchComments(bookId);
-    }
-
-//    wishlist
-
-    private void toggleWishlist() {
-        if (isInWishlist) {
-            removeFromWishlist();
-        } else {
-            addToWishlist();
-        }
-    }
-
-    private void addToWishlist() {
-        String bookId = getIntent().getStringExtra("BOOK_ID");
-        String token = GetData.getInstance().getToken();
-        Log.d("BookDetailActivity", "Token: " + token);
-
-        if (token == null || token.equals(Exception.NOT_FOUND_DATA.getMessage())) {
-            // Handle case where user is not logged in
-            Toast.makeText(this, "Please log in to add to wishlist", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        WishListRequest request = new WishListRequest();
-        request.setBookId(Long.parseLong(bookId));
-
-        ApiService.apiService.create(ApiBook.class).addToWishlist("Bearer " + token, request).enqueue(new Callback<ApiResponse<WishListResponse>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<WishListResponse>> call, Response<ApiResponse<WishListResponse>> response) {
-                if (response.isSuccessful()) {
-                    isInWishlist = true;
-                    Toast.makeText(BookDetailActivity.this, "Added to wishlist", Toast.LENGTH_SHORT).show();
-                    updateLoveButtonUI();
-                } else {
-                    Log.e("BookDetailActivity", "Failed to add to wishlist. Response code: " + response.code());
-                    try {
-                        Log.e("BookDetailActivity", "Error body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<WishListResponse>> call, Throwable t) {
-                Log.e("BookDetailActivity", "Failed to add to wishlist", t);
-            }
-        });
-    }
-
-    private void removeFromWishlist() {
-        String bookId = getIntent().getStringExtra("BOOK_ID");
-        ApiService.apiService.create(ApiBook.class).removeFromWishlist(Long.parseLong(bookId)).enqueue(new Callback<ApiResponse<Void>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-                if (response.isSuccessful()) {
-                    isInWishlist = false;
-                    updateLoveButtonUI();
-                    Toast.makeText(BookDetailActivity.this, "Removed from wishlist", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
-                Log.e("BookDetailActivity", "Failed to remove from wishlist", t);
-            }
-        });
-    }
-
-    private void updateLoveButtonUI() {
-        loveButton.setImageResource(isInWishlist ? R.drawable.heart_check_24px : R.drawable.like);
     }
 }
