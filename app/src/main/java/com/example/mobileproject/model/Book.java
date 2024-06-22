@@ -20,8 +20,8 @@ public class Book {
     String title;
     List<Author> authors;
     List<Category> categories;
+    List<Comment> comments;
     String content;
     String imageUrl;
     int status;
-    private String content;
 }
