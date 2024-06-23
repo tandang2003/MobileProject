@@ -217,14 +217,12 @@ public class ExploreFragment extends Fragment {
 
             button.setOnClickListener(v -> {
                 // Xử lý khi nhấn vào nút danh mục
-                // Handle the button click event
                 Intent intent = new Intent(getContext(), RecyclerActivity.class);
-                // Pass the value of the clicked button through the Intent
-                System.out.println("123432:    " + category.getId());
-                Bundle bundle= new Bundle();
-                bundle.putString("category", String.valueOf(category.getId()));
-                intent.putExtra("BUTTON_TEXT",bundle ); // assuming 'category' holds the button text value
-                // Start RecyclerActivity with the Intent
+                // Pass the category name and ID to RecyclerActivity
+                Bundle bundle = new Bundle();
+                bundle.putString("category_id", String.valueOf(category.getId()));
+                bundle.putString("category_name", category.getName());
+                intent.putExtra("CATEGORY_BUNDLE", bundle);
                 startActivity(intent);
             });
             categoryLayout.addView(button);
