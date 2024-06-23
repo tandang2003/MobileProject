@@ -20,6 +20,7 @@ import com.example.mobileproject.activity.LibraryActivity;
 import com.example.mobileproject.api.ApiAuthentication;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dialog.auth.SignUpDialog;
+import com.example.mobileproject.dto.request.GoogleAuthRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.AuthenticationResponse;
 import com.example.mobileproject.model.AuthenticationRequest;
@@ -141,24 +142,35 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            // Retrieve the Firebase ID token
-                            user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Get ID token
-                                        String idToken = task.getResult().getToken();
-                                        // Store the token
-                                        GetData.getInstance().setString("token", idToken);
-                                        // Navigate to LibraryActivity after successful login
-                                        goToLibraryActivity();
-                                    } else {
-                                        Log.w(TAG, "getIdToken:failure " + task.getException().getMessage());
-                                        ErrorDialog error = new ErrorDialog(LoginActivity.this, "Failed to get ID token.");
-                                        error.show();
-                                    }
-                                }
-                            });
+                            // get Token form server
+                            ApiService.apiService.create(ApiAuthentication.class).authenticateGoogle(GoogleAuthRequest.builder().avatar(user.getPhotoUrl().toString()).email(user.getEmail()).build())
+                                    .enqueue(new Callback<ApiResponse<AuthenticationResponse>>() {
+                                        @Override
+                                        public void onResponse(Call<ApiResponse<AuthenticationResponse>> call, Response<ApiResponse<AuthenticationResponse>> response) {
+                                            if (response.isSuccessful()) {
+                                                ApiResponse<AuthenticationResponse> authenticationResponse = response.body();
+                                                AuthenticationResponse result = authenticationResponse.getResult();
+                                                if (result.isAuthenticated()) {
+                                                    GetData.getInstance().setString("token", result.getToken());
+                                                    // Example: Navigate to LibraryActivity after successful login
+                                                    goToLibraryActivity();
+                                                } else {
+                                                    ErrorDialog error = new ErrorDialog(LoginActivity.this, Exception.UNAUTHORIZED.getMessage());
+                                                    error.show();
+                                                }
+                                            } else {
+                                                ErrorDialog error = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                                                error.show();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ApiResponse<AuthenticationResponse>> call, Throwable throwable) {
+                                            ErrorDialog errorDialog = new ErrorDialog(LoginActivity.this, Exception.FAILURE_CALL_API.getMessage());
+                                            errorDialog.show();
+                                        }
+                                    });
                         }
                     } else {
                         // If sign in fails, display a message to the user.

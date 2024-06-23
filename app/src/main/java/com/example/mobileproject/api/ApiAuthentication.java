@@ -1,6 +1,7 @@
 package com.example.mobileproject.api;
 
 import com.example.mobileproject.dto.request.ForgetPasswordRequest;
+import com.example.mobileproject.dto.request.GoogleAuthRequest;
 import com.example.mobileproject.dto.request.LogoutRequest;
 import com.example.mobileproject.dto.request.ResetPasswordRequest;
 import com.example.mobileproject.dto.request.UserCreationRequest;
@@ -49,4 +50,7 @@ public interface ApiAuthentication extends ApiService {
 
     @GET("users/role")
     Call<ApiResponse<RoleResponse>> getRole(@Header("Authorization") String token);
+
+    @POST("auth/google")
+    Call<ApiResponse<AuthenticationResponse>> authenticateGoogle(@Body GoogleAuthRequest request);
 }

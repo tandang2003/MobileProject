@@ -2,7 +2,6 @@ package com.example.mobileproject.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import retrofit2.Callback;
 
 @Data
 @Builder
@@ -14,5 +13,4 @@ public class ApiResponse<T> {
     private int code = 1000;
     private String message;
     private T result;
-
 }
