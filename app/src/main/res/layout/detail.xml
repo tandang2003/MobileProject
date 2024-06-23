@@ -20,8 +20,8 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="44dp"
+        android:layout_height="31dp"
         android:layout_marginTop="20dp"
         android:background="@null"
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
@@ -30,22 +30,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_24px" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/imageButton2"
-        android:layout_width="20dp"
-        android:layout_height="36dp"
+        android:layout_width="15dp"
+        android:layout_height="27dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842"
         app:srcCompat="@drawable/ellipsis_vertical_solid" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="408dp"
-        android:layout_height="207dp"
+        android:layout_width="389dp"
+        android:layout_height="208dp"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,8 +55,8 @@
 
         <ImageView
             android:id="@+id/bookCover"
-            android:layout_width="115dp"
-            android:layout_height="187dp"
+            android:layout_width="111dp"
+            android:layout_height="197dp"
             android:src="@drawable/book" />
 
         <LinearLayout
@@ -73,8 +71,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eragon 3 (Brisingr) – Hòa Kiếm"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textColor="@color/white"/>
+                android:paddingTop="20dp"/>
 
             <TextView
                 android:id="@+id/bookAuthor"
@@ -82,18 +81,19 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="5dp"
                 android:text="Tác giả: Christopher Paolini"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:paddingTop="10dp" />
         </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dowloadButton"
+        android:id="@+id/readButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="352dp"
         android:layout_height="39dp"
         android:layout_gravity="right"
         android:backgroundTint="@color/organe"
-        android:text="Download"
+        android:text="Đọc sách"
         android:textColor="@color/brown"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,64 +106,61 @@
         app:strokeWidth="2dp" />
 
     <TextView
-        android:id="@+id/bookDescription"
+        android:id="@+id/bookContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginTop="40dp"
         android:padding="10dp"
         android:text="About this book"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        tools:layout_editor_absoluteX="3dp" />
 
     <TextView
         android:id="@+id/ratingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:text="Rating and review"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/reviewRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookDescription"
-        app:layout_constraintVertical_bias="0.454" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/bookContent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reviewRecyclerView"
+    <ScrollView
+        android:id="@+id/commentScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="17dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/commentButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.816" />
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/ratingTitle"
+        app:layout_constraintBottom_toTopOf="@+id/commentButton">
+
+        <LinearLayout
+            android:id="@+id/cmt_list_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+        </LinearLayout>
+
+    </ScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/commentButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_marginBottom="16dp"
         android:text="Comment"
         android:textColor="@color/organe"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923"
         app:strokeColor="@color/organe"
         app:strokeWidth="2dp" />
 
