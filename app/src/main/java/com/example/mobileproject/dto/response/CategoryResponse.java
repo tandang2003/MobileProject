@@ -1,8 +1,4 @@
-package com.example.mobileproject.dto.response;
-
-import com.example.mobileproject.model.Book;
-
-import java.util.List;
+package edu.vn.hcmuaf.ebook.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,5 +11,4 @@ import lombok.experimental.FieldDefaults;
 public class CategoryResponse {
     long id;
     String name;
-    private List<Book> books;
 }

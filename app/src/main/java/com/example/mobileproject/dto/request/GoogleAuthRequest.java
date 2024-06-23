@@ -1,4 +1,4 @@
-package edu.vn.hcmuaf.ebook.dto.response;
+package edu.vn.hcmuaf.ebook.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IntrospectResponse {
-    boolean valid;
+public class GoogleAuthRequest {
+    String email;
+    String avatar;
 }

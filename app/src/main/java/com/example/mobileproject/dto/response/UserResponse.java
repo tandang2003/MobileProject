@@ -1,7 +1,6 @@
-package com.example.mobileproject.dto.response;
+package edu.vn.hcmuaf.ebook.dto.response;
 
-import com.example.mobileproject.model.Role;
-
+import edu.vn.hcmuaf.ebook.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

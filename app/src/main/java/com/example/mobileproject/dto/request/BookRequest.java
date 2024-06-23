@@ -1,8 +1,7 @@
-package com.example.mobileproject.dto.request;
+package edu.vn.hcmuaf.ebook.dto.request;
 
-import com.example.mobileproject.model.Author;
-import com.example.mobileproject.model.Category;
-
+import edu.vn.hcmuaf.ebook.entity.Author;
+import edu.vn.hcmuaf.ebook.entity.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
