@@ -36,6 +36,7 @@ import com.example.mobileproject.dto.response.CategoryResponse;
 import com.example.mobileproject.model.Author;
 import com.example.mobileproject.model.Book;
 import com.example.mobileproject.model.Category;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -156,7 +157,9 @@ public class ExploreFragment extends Fragment {
         for (BookResponse bookResponse : bookResponses) {
             Book book = new Book();
             book.setTitle(bookResponse.getTitle());
+            book.setContent(bookResponse.getContent());
             book.setImageUrl(bookResponse.getImageUrl());
+            book.setId(bookResponse.getId());
 
             List<Category> categories = new ArrayList<>();
             for (Category categoryResponse : bookResponse.getCategories()) {
@@ -251,11 +254,13 @@ public class ExploreFragment extends Fragment {
             // Thêm sự kiện click vào ảnh
             bookImage.setOnClickListener(v -> {
                 Log.d("ExploreFragment", "Image clicked for book: " + book.getTitle()); // Sử dụng Log.d để kiểm tra click event
+                Log.d("ExploreFragment", "Book id: " + book.getId());
                 Intent intent = new Intent(getContext(), BookDetailActivity.class);
                 intent.putExtra("BOOK_TITLE", book.getTitle());
-                intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName()); // Assuming there's at least one author
-                intent.putExtra("BOOK_DESCRIPTION", "About this book..."); // Replace with actual description
+                intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName());
+                intent.putExtra("BOOK_CONTENT", book.getContent());
                 intent.putExtra("BOOK_IMAGE_URL", book.getImageUrl());
+                intent.putExtra("BOOK_ID", String.valueOf(book.getId()));
                 startActivity(intent);
             });
 

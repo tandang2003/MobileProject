@@ -73,6 +73,9 @@
         <activity
             android:name=".activity.admin.BookManagerActivity"
             android:exported="true" />
+        <activity
+            android:name=".activity.ReadingActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

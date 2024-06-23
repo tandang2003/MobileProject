@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentResponse {
-    Long id;
-    String content;
-    UserResponse user;
+public class WishListResponse {
+    String userId;
+    Long bookId;
 }
