@@ -22,7 +22,6 @@ import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CategoryResponse;
-import com.example.mobileproject.dto.response.AuthorResponse;
 import com.example.mobileproject.model.Author;
 import com.example.mobileproject.model.Book;
 import com.example.mobileproject.model.Category;

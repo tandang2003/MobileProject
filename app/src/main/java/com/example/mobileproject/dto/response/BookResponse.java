@@ -1,8 +1,9 @@
-package edu.vn.hcmuaf.ebook.dto.response;
+package com.example.mobileproject.dto.response;
 
-import edu.vn.hcmuaf.ebook.entity.Author;
-import edu.vn.hcmuaf.ebook.entity.Category;
-import edu.vn.hcmuaf.ebook.entity.Comment;
+import com.example.mobileproject.model.Author;
+import com.example.mobileproject.model.Category;
+import com.example.mobileproject.model.Comment;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,8 +19,8 @@ public class BookResponse {
     long id;
     String title;
     List<Author> authors;
-    List<CategoryResponse> categories;
-    List<CommentResponse> comments;
+    List<Category> categories;
+    List<Comment> comments;
     double price;
     private int pages;
     String imageUrl;
