@@ -63,7 +63,6 @@ public class BookDetailActivity extends AppCompatActivity {
         String bookId = getIntent().getStringExtra("BOOK_ID");
         bookTitle.setText(title);
         bookAuthor.setText(author);
-        bookContent.setText(content);
         Picasso.get().load(imageUrl).into(bookCover);
 
         // Set click listeners
@@ -72,7 +71,7 @@ public class BookDetailActivity extends AppCompatActivity {
         commentButton.setOnClickListener(v -> showCommentDialog(bookId));
         readButton.setOnClickListener(v -> {
             Intent intent = new Intent(BookDetailActivity.this, ReadingActivity.class);
-            intent.putExtra("BOOK_CONTENT", bookContent.getText().toString());
+            intent.putExtra("BOOK_CONTENT", content);
             intent.putExtra("BOOK_TITLE", bookTitle.getText().toString());
             startActivity(intent);
         });
