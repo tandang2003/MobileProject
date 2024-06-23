@@ -1,4 +1,4 @@
-package com.example.mobileproject.dto.response;
+package com.example.mobileproject.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
-    long id;
-    String name;
+public class GoogleAuthRequest {
+    String email;
+    String avatar;
 }
