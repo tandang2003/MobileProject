@@ -29,7 +29,7 @@ public class BookOptionsDialog extends BottomSheetDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bottom_sheet_layout);
+        setContentView(R.layout.bottom_option_dialog);
 
         TextView titleTextView = findViewById(R.id.bookTitle);
         TextView authorTextView = findViewById(R.id.bookAuthor);

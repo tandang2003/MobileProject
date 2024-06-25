@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@android:color/black">
+    android:background="@color/bg">
 
     <!-- LinearLayout cho phần hình ảnh và thông tin -->
     <LinearLayout
@@ -71,18 +71,18 @@
         android:orientation="horizontal">
 
         <!-- LinearLayout cho ImageButton 2 -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal">-->
 
             <!-- ImageButton 2: About -->
             <ImageButton
                 android:id="@+id/aboutButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="15dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:contentDescription="About this book"
                 android:src="@drawable/ic_about"
@@ -90,24 +90,25 @@
                 app:tint="@android:color/holo_blue_light" />
 
             <!-- LinearLayout cho TextView 2 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="4"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:paddingStart="16dp"-->
+<!--                android:orientation="vertical">-->
 
                 <!-- TextView 4: About -->
                 <TextView
                     android:id="@+id/aboutText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="About this book"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
-        </LinearLayout>
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
     </LinearLayout>
 
     <!-- LinearLayout cho ImageButton 3 -->
@@ -118,18 +119,18 @@
         android:orientation="horizontal">
 
         <!-- LinearLayout cho ImageButton 3 -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal">-->
 
             <!-- ImageButton 3: Like -->
             <ImageButton
                 android:id="@+id/likeButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="15dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Like this book"
                 android:src="@drawable/ic_like"
@@ -137,13 +138,13 @@
                 app:tint="@android:color/holo_red_light" />
 
             <!-- LinearLayout cho TextView 3 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="4"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:paddingStart="16dp"-->
+<!--                android:orientation="vertical">-->
 
                 <!-- TextView 5: Like -->
                 <TextView
@@ -151,10 +152,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Like this book"
+                    android:layout_gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
-        </LinearLayout>
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
     </LinearLayout>
 
     <LinearLayout
@@ -164,18 +166,18 @@
         android:orientation="horizontal">
 
         <!-- LinearLayout cho ImageButton 3 -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal">-->
 
             <!-- ImageButton 3: Download -->
             <ImageButton
                 android:id="@+id/download"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="15dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Download this book"
                 android:src="@drawable/ic_download"
@@ -183,24 +185,25 @@
                 app:tint="@android:color/holo_green_light" />
 
             <!-- LinearLayout cho TextView 3 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="4"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:paddingStart="16dp"-->
+<!--                android:orientation="vertical">-->
 
                 <!-- TextView 5: Download -->
                 <TextView
                     android:id="@+id/downloadText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="Download this book"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
-        </LinearLayout>
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
     </LinearLayout>
 
 </LinearLayout>
