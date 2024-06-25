@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/black">
+
+    <!-- LinearLayout cho phần hình ảnh và thông tin -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- ImageButton: Hình ảnh cuốn sách -->
+        <ImageButton
+            android:id="@+id/bookImageButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Book Image"
+            android:src="@drawable/book"
+            android:scaleType="fitCenter" />
+
+        <!-- LinearLayout cho thông tin sách -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="16dp">
+
+            <!-- TextView: Tên sách -->
+            <TextView
+                android:id="@+id/bookTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white" />
+
+            <!-- TextView: Tác giả -->
+            <TextView
+                android:id="@+id/bookAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Book Author"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/white" />
+
+            <!-- TextView: Danh mục -->
+            <TextView
+                android:id="@+id/bookCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Book Category"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- LinearLayout cho ImageButton 2 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- ImageButton 2: About -->
+            <ImageButton
+                android:id="@+id/aboutButton"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="About this book"
+                android:src="@drawable/ic_about"
+                android:scaleType="fitCenter"
+                app:tint="@android:color/holo_blue_light" />
+
+            <!-- LinearLayout cho TextView 2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:orientation="vertical">
+
+                <!-- TextView 4: About -->
+                <TextView
+                    android:id="@+id/aboutText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About this book"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- LinearLayout cho ImageButton 3 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- LinearLayout cho ImageButton 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- ImageButton 3: Like -->
+            <ImageButton
+                android:id="@+id/likeButton"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Like this book"
+                android:src="@drawable/ic_like"
+                android:scaleType="fitCenter"
+                app:tint="@android:color/holo_red_light" />
+
+            <!-- LinearLayout cho TextView 3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:orientation="vertical">
+
+                <!-- TextView 5: Like -->
+                <TextView
+                    android:id="@+id/likeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Like this book"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- LinearLayout cho ImageButton 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- ImageButton 3: Download -->
+            <ImageButton
+                android:id="@+id/download"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Download this book"
+                android:src="@drawable/ic_download"
+                android:scaleType="fitCenter"
+                app:tint="@android:color/holo_green_light" />
+
+            <!-- LinearLayout cho TextView 3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:orientation="vertical">
+
+                <!-- TextView 5: Download -->
+                <TextView
+                    android:id="@+id/downloadText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Download this book"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

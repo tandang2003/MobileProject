@@ -26,9 +26,12 @@ import com.example.mobileproject.activity.BookAdapter;
 import com.example.mobileproject.activity.BookDetailActivity;
 import com.example.mobileproject.activity.ExploreActivity;
 import com.example.mobileproject.activity.RecyclerActivity;
+import com.example.mobileproject.activity.auth.LoginActivity;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
+import com.example.mobileproject.dialog.BookOptionsDialog;
+import com.example.mobileproject.dialog.auth.SignUpDialog;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.AuthorResponse;
 import com.example.mobileproject.dto.response.BookResponse;
@@ -330,6 +333,42 @@ public class ExploreFragment extends Fragment {
                     100,
                     50
             ));
+            optionsIcon.setOnClickListener(v -> {
+                // Khi người dùng nhấp vào một cuốn sách
+                BookOptionsDialog dialog = new BookOptionsDialog(
+                        getContext(),
+                        book.getTitle(),
+                        book.getAuthors().get(0).getName(),
+                        book.getImageUrl()
+                );
+                dialog.setOnOptionClickListener(new BookOptionsDialog.OnOptionClickListener() {
+                    @Override
+                    public void onAboutClicked() {
+                        // Xử lý khi người dùng chọn About
+                        Intent intent = new Intent(getContext(), BookDetailActivity.class);
+                        intent.putExtra("BOOK_TITLE", book.getTitle());
+                        intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName());
+                        intent.putExtra("BOOK_CONTENT", book.getContent());
+                        intent.putExtra("BOOK_IMAGE_URL", book.getImageUrl());
+                        intent.putExtra("BOOK_ID", String.valueOf(book.getId()));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLikeClicked() {
+                        // Xử lý khi người dùng chọn Like
+                    }
+
+                    @Override
+                    public void onDownloadClicked() {
+                        // Xử lý khi người dùng chọn Download
+                    }
+                });
+                dialog.show();
+            });
+
+
+
 
             optionsLayout.addView(optionsIcon);
 
