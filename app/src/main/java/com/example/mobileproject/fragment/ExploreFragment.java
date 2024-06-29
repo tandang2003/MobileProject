@@ -32,12 +32,14 @@ import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
 import com.example.mobileproject.dialog.BookOptionsDialog;
 import com.example.mobileproject.dialog.auth.SignUpDialog;
+import com.example.mobileproject.dto.request.WishListRequest;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CategoryResponse;
 import com.example.mobileproject.model.Author;
 import com.example.mobileproject.model.Book;
 import com.example.mobileproject.model.Category;
+import com.example.mobileproject.sharedPreference.GetData;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +48,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -341,7 +345,7 @@ public class ExploreFragment extends Fragment {
                 dialog.setOnOptionClickListener(new BookOptionsDialog.OnOptionClickListener() {
                     @Override
                     public void onAboutClicked() {
-                        // Xử lý khi người dùng chọn About
+                        // Handle About option
                         Intent intent = new Intent(getContext(), BookDetailActivity.class);
                         intent.putExtra("BOOK_TITLE", book.getTitle());
                         intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName());
@@ -353,12 +357,13 @@ public class ExploreFragment extends Fragment {
 
                     @Override
                     public void onLikeClicked() {
-                        // Xử lý khi người dùng chọn Like
+                        // Handle Like option
+                        addToWishlist(String.valueOf(book.getId()));
                     }
 
                     @Override
                     public void onDownloadClicked() {
-                        // Xử lý khi người dùng chọn Download
+                        // Handle Download option
                     }
                 });
                 dialog.show();
@@ -375,5 +380,65 @@ public class ExploreFragment extends Fragment {
 
             booksListSection.addView(bookLayout);
         }
+    }
+
+    private void addToWishlist(String bookId) {
+        if (bookId == null) {
+            Log.e("ExploreFragment", "Book ID is null");
+            return;
+        }
+
+        WishListRequest request = new WishListRequest(Long.parseLong(bookId));
+
+        // Get the token from GetData
+        String token = GetData.getInstance().getToken();
+
+        // Create a new OkHttpClient with an interceptor to add the token
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder()
+                            .header("Authorization", "Bearer " + token)
+                            .method(original.method(), original.body());
+                    Request newRequest = requestBuilder.build();
+                    return chain.proceed(newRequest);
+                })
+                .build();
+
+        // Create the API service using the existing ApiService interface
+        ApiBook apiBook = ApiService.apiService.newBuilder()
+                .client(client)
+                .build()
+                .create(ApiBook.class);
+
+        // Make the API call
+        apiBook.addToWishlist(request).enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful()) {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Added to wishlist", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                } else {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Failed to add to wishlist", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                    });
+                }
+                Log.e("ExploreFragment", "Network error", t);
+            }
+        });
     }
 }
