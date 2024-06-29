@@ -16,6 +16,7 @@ import com.example.mobileproject.R;
 import com.example.mobileproject.api.ApiBook;
 import com.example.mobileproject.api.ApiCategory;
 import com.example.mobileproject.api.ApiService;
+import com.example.mobileproject.dialog.BookOptionsDialog;
 import com.example.mobileproject.dto.response.ApiResponse;
 import com.example.mobileproject.dto.response.BookResponse;
 import com.example.mobileproject.dto.response.CategoryResponse;
@@ -210,8 +211,58 @@ public class RecyclerActivity extends AppCompatActivity {
             bookInfoLayout.addView(categoryLayout);
             bookInfoLayout.addView(authorLayout);
 
+
+            LinearLayout optionsLayout = new LinearLayout(this);
+            optionsLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+            ));
+            optionsLayout.setGravity(Gravity.CENTER_VERTICAL);
+
+            ImageView optionsIcon = new ImageView(this);
+            optionsIcon.setImageResource(R.drawable.ellipsis_vertical_solid);
+            optionsIcon.setLayoutParams(new LinearLayout.LayoutParams(
+                    100,
+                    50
+            ));
+            optionsIcon.setOnClickListener(v -> {
+                // Khi người dùng nhấp vào một cuốn sách
+                BookOptionsDialog dialog = new BookOptionsDialog(
+                        this,
+                        book.getTitle(),
+                        book.getAuthors().get(0).getName(),
+                        book.getImageUrl()
+                );
+                dialog.setOnOptionClickListener(new BookOptionsDialog.OnOptionClickListener() {
+                    @Override
+                    public void onAboutClicked() {
+                        // Xử lý khi người dùng chọn About
+                        Intent intent = new Intent(RecyclerActivity.this, BookDetailActivity.class);
+                        intent.putExtra("BOOK_TITLE", book.getTitle());
+                        intent.putExtra("BOOK_AUTHOR", book.getAuthors().get(0).getName());
+                        intent.putExtra("BOOK_CONTENT", book.getContent());
+                        intent.putExtra("BOOK_IMAGE_URL", book.getImageUrl());
+                        intent.putExtra("BOOK_ID", String.valueOf(book.getId()));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLikeClicked() {
+                        // Xử lý khi người dùng chọn Like
+                    }
+
+                    @Override
+                    public void onDownloadClicked() {
+                        // Xử lý khi người dùng chọn Download
+                    }
+                });
+                dialog.show();
+            });
+
+            optionsLayout.addView(optionsIcon);
             bookLayout.addView(bookImage);
             bookLayout.addView(bookInfoLayout);
+            bookLayout.addView(optionsLayout);
 
             booksListSection.addView(bookLayout);
         }
